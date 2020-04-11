@@ -668,7 +668,7 @@ bool OverWeight(string we){
 bool OverHeight(string He){
     double num;
     num = atof(He.c_str());
-    if(num > 2.75){
+    if(num > 275){
         return true;
     }else{
         return false;
