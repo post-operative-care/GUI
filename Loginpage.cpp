@@ -6,16 +6,16 @@
 #define LOG_OUT 3
 LRESULT CALLBACK WindowProcedure(HWND,UINT,WPARAM,LPARAM);
 
-void LoadImages();
-void AddControls(HWND);
+void LoadImgLog();
+void LoginPage(HWND);
 void RegisterPage(HWND);
 void LoadImgRe();
 void PatientPage(HWND);
 void LoadImgPa();
 void DoctorPage(HWND);
 void LoadImgDoc();
-HWND hLogo,hLogF,hTop;
-HBITMAP hLogo200,hLogIcon,hReBg,hSi,hPaProM,hPaBg,hPaClick,hPaLogout,hDocBg,hDocPro;
+HWND hLogF,hTop;
+HBITMAP hLoBg,hLog,hLogIcon,hReBg,hSi,hPaProM,hPaBg,hPaClick,hPaLogout,hDocBg,hDocPro;
 HFONT hFont;
 
 
@@ -66,8 +66,8 @@ LRESULT CALLBACK WindowProcedure(HWND hWnd,UINT msg,WPARAM wp,LPARAM lp){
             }
             break;       
         case WM_CREATE:
-            LoadImages();
-            AddControls(hWnd);            
+            LoadImgLog();
+            LoginPage(hWnd);            
             break;
         case WM_DESTROY:
             PostQuitMessage(0);
@@ -79,33 +79,23 @@ LRESULT CALLBACK WindowProcedure(HWND hWnd,UINT msg,WPARAM wp,LPARAM lp){
 
 
 
-void AddControls(HWND hWnd){
-    hLogo = CreateWindowW(L"Static",NULL,WS_CHILD | WS_VISIBLE | SS_BITMAP,0,-50,720,720,hWnd,NULL,NULL,NULL);
-    SendMessageW(hLogo,STM_SETIMAGE,IMAGE_BITMAP,(LPARAM)hLogo200);
-    
-    
+void LoginPage(HWND hWnd){
+    HWND hBg = CreateWindowW(L"Static",NULL,WS_CHILD | WS_VISIBLE | SS_BITMAP,0,0,1280,720,hWnd,NULL,NULL,NULL);
+    SendMessageW(hBg,STM_SETIMAGE,IMAGE_BITMAP,(LPARAM)hLoBg);
 
-    hLogF = CreateWindowW(L"Static",L"Log In",WS_VISIBLE | WS_CHILD | WS_BORDER,800,150,100,50,hWnd,NULL,NULL,NULL);
-    //hFont = CreateFontW(20,0,0,0,FW_DONTCARE,FALSE,FALSE,FALSE,ANSI_CHARSET,OUT_DEFAULT_PRECIS,CLIP_DEFAULT_PRECIS,DEFAULT_QUALITY,DEFAULT_PITCH | FF_SWISS,L"Aerial");
-    //SendMessageW(hLogF,WM_SETFONT,(WPARAM)hFont,TRUE);
- 
-    
+    CreateWindowW(L"Edit",L"",WS_VISIBLE | WS_CHILD | ES_AUTOHSCROLL | WS_BORDER,340,317,257,20,hWnd,NULL,NULL,NULL);  
 
-    CreateWindowW(L"Static",L"username:",WS_VISIBLE | WS_CHILD,825,240,77,20,hWnd,NULL,NULL,NULL);
-    CreateWindowW(L"Edit",L"",WS_VISIBLE | WS_CHILD | ES_AUTOHSCROLL | WS_BORDER,825,260,200,20,hWnd,NULL,NULL,NULL);  
+    CreateWindowW(L"Edit",L"",WS_VISIBLE | WS_CHILD | ES_AUTOHSCROLL | WS_BORDER | ES_PASSWORD,340,380,257,20,hWnd,NULL,NULL,NULL);
 
-    CreateWindowW(L"Static",L"password:",WS_VISIBLE | WS_CHILD,825,285,77,20,hWnd,NULL,NULL,NULL);
-    CreateWindowW(L"Edit",L"",WS_VISIBLE | WS_CHILD | ES_AUTOHSCROLL | WS_BORDER | ES_PASSWORD,825,305,200,20,hWnd,NULL,NULL,NULL);
-
-    HWND hBut = CreateWindowW(L"Button",NULL,WS_VISIBLE | WS_CHILD | BS_BITMAP,825,350,119,50,hWnd,(HMENU)LOG_IN,NULL,NULL);
-    SendMessageW(hBut,BM_SETIMAGE,IMAGE_BITMAP,(LPARAM)hLogIcon);
+    HWND hLogBut = CreateWindowW(L"Button",NULL,WS_VISIBLE | WS_CHILD | BS_BITMAP,400,479,100,42,hWnd,(HMENU)LOG_IN,NULL,NULL);
+    SendMessageW(hLogBut,BM_SETIMAGE,IMAGE_BITMAP,(LPARAM)hLog);
 
  
 }
 
-void LoadImages(){ //loadimage for login page
-    hLogo200 = (HBITMAP)LoadImageW(NULL,L"loginpic.bmp",IMAGE_BITMAP,720,720,LR_LOADFROMFILE);
-    hLogIcon = (HBITMAP)LoadImageW(NULL,L"LogInr.bmp",IMAGE_BITMAP,0,0,LR_LOADFROMFILE);
+void LoadImgLog(){ //loadimage for login page
+    hLog = (HBITMAP)LoadImageW(NULL,L"LoginPage\\Log In.bmp",IMAGE_BITMAP,0,0,LR_LOADFROMFILE);
+    hLoBg = (HBITMAP)LoadImageW(NULL,L"LoginPage\\02.bmp",IMAGE_BITMAP,0,0,LR_LOADFROMFILE);
    
 }
 
