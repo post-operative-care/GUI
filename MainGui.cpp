@@ -57,7 +57,7 @@ LRESULT CALLBACK WindowProcedure(HWND hWnd,UINT msg,WPARAM wp,LPARAM lp){
         case WM_COMMAND:
             switch(wp){
                 case LOG_IN:
-                char username[20],pass[20];
+                    char username[20],pass[20];
                     GetWindowText(hUser,username,20);
                     GetWindowText(hPass,pass,20);
                     if(login_page(username,pass) == "false"){
@@ -90,25 +90,26 @@ LRESULT CALLBACK WindowProcedure(HWND hWnd,UINT msg,WPARAM wp,LPARAM lp){
                     GetWindowText(hReYear,Year,4);
                     GetWindowText(hWei,Weight,3);
                     GetWindowText(hHeig,Height,4);
-                    if(strcmp(gender,"") == 0 || strcmp(Illness,"") == 0 || strcmp(Firstname,"") == 0 || strcmp(Lastname,"") == 0 || strcmp(Day,"") == 0 || strcmp(Month,"") == 0 || strcmp(Year,"") == 0 || strcmp(Weight,"") == 0 || strcmp(Height,"") == 0){
-                        MessageBoxW(hWnd,L"Please Input ALL Patient Detail",L"Error",MB_OK);
-                    }else{
-                        if(pdata_base(Gender,Illness,Firstname,Lastname,Day,Month,Year,Weight,Height) == 0){
-                            MessageBoxW(hWnd,L"You can only input alpha here!",L"Error",MB_OK);
-                        }else if(pdata_base(Gender,Illness,Firstname,Lastname,Day,Month,Year,Weight,Height) == 1){
-                            MessageBoxW(hWnd,L"This Patient has already Registred.",L"Error",MB_OK);
-                        }else if(pdata_base(Gender,Illness,Firstname,Lastname,Day,Month,Year,Weight,Height) == 2){
-                            MessageBoxW(hWnd,L"Please Check your patient Weight !!",L"Error",MB_OK);
-                        }else if(pdata_base(Gender,Illness,Firstname,Lastname,Day,Month,Year,Weight,Height) == 3){
-                            MessageBoxW(hWnd,L"Please Check your patient Height !!",L"Error",MB_OK);
-                        }else if(pdata_base(Gender,Illness,Firstname,Lastname,Day,Month,Year,Weight,Height) == 4){
-                            MessageBoxW(hWnd,L"Please Input Day between 1-31 !",L"Error",MB_OK);
-                        }else if(pdata_base(Gender,Illness,Firstname,Lastname,Day,Month,Year,Weight,Height) == 5){
-                            MessageBoxW(hWnd,L"Please Input Day between 1-29 !",L"Error",MB_OK);
-                        }else if(pdata_base(Gender,Illness,Firstname,Lastname,Day,Month,Year,Weight,Height) == 6){
-                            MessageBoxW(hWnd,L"Please Input Day between 1-30 !",L"Error",MB_OK);
-                        }else if(pdata_base(Gender,Illness,Firstname,Lastname,Day,Month,Year,Weight,Height) == 7){
-                            MessageBoxW(hWnd,L"Please CHECK  Years !",L"Error",MB_OK);
+                    if(strcmp(Gender,"") == 0 || strcmp(Illness,"") == 0 || strcmp(Firstname,"") == 0 || strcmp(Lastname,"") == 0 || strcmp(Day,"") == 0 || strcmp(Month,"") == 0 || strcmp(Year,"") == 0 || strcmp(Weight,"") == 0 || strcmp(Height,"") == 0){
+                        MessageBoxW(hWnd,L"Please Input All Patient Detail",L"Error",MB_OK | MB_ICONEXCLAMATION);
+                    }else{MessageBoxW(hWnd,L"NICE",L"Error",MB_OK);
+                        if(pdata_base(Gender,Illness,Firstname,Lastname,Day,Month,Year,Weight,Height) == 10){
+                            MessageBoxW(hWnd,L"You can only input alpha here!",L"Error",MB_OK | MB_ICONEXCLAMATION);
+                        }else if(pdata_base(Gender,Illness,Firstname,Lastname,Day,Month,Year,Weight,Height) == 11){
+                            MessageBoxW(hWnd,L"This Patient has already Registred.",L"Error",MB_OK | MB_ICONEXCLAMATION);
+                        }else if(pdata_base(Gender,Illness,Firstname,Lastname,Day,Month,Year,Weight,Height) == 12){
+                            MessageBoxW(hWnd,L"Please Check your patient Weight !!",L"Error",MB_OK | MB_ICONEXCLAMATION);
+                        }else if(pdata_base(Gender,Illness,Firstname,Lastname,Day,Month,Year,Weight,Height) == 13){
+                            MessageBoxW(hWnd,L"Please Check your patient Height !!",L"Error",MB_OK | MB_ICONEXCLAMATION);
+                        }else if(pdata_base(Gender,Illness,Firstname,Lastname,Day,Month,Year,Weight,Height) == 14){
+                            MessageBoxW(hWnd,L"Please Input Day between 1-31 !",L"Error",MB_OK | MB_ICONEXCLAMATION);
+                        }else if(pdata_base(Gender,Illness,Firstname,Lastname,Day,Month,Year,Weight,Height) == 15){
+                            MessageBoxW(hWnd,L"Please Input Day between 1-29 !",L"Error",MB_OK | MB_ICONEXCLAMATION);
+                        }else if(pdata_base(Gender,Illness,Firstname,Lastname,Day,Month,Year,Weight,Height) == 16){
+                            MessageBoxW(hWnd,L"Please Input Day between 1-30 !",L"Error",MB_OK | MB_ICONEXCLAMATION);
+                        }else if(pdata_base(Gender,Illness,Firstname,Lastname,Day,Month,Year,Weight,Height) == 17){
+                            MessageBoxW(hWnd,L"Please CHECK  Years !",L"Error",MB_OK | MB_ICONEXCLAMATION);
+                        }
                     }
                     
                     break;
