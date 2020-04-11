@@ -80,19 +80,20 @@ LRESULT CALLBACK WindowProcedure(HWND hWnd,UINT msg,WPARAM wp,LPARAM lp){
                     }
                     break; 
                 case SIGN_UP: 
-                    char Gender[10],Illness[20],Firstname[10],Lastname[10],Day[2],Month[2],Year[4],Weight[3],Height[4];
+                    char Gender[10],Illness[20],Firstname[10],Lastname[10],Day[3],Month[3],Year[5],Weight[3],Height[4];
                     GetWindowText(hGen,Gender,10);
                     GetWindowText(hTop,Illness,20);
                     GetWindowText(hReFn,Firstname,10);
                     GetWindowText(hReLn,Lastname,10);
-                    GetWindowText(hReDay,Day,2);
-                    GetWindowText(hReMont,Month,2);
-                    GetWindowText(hReYear,Year,4);
+                    GetWindowText(hReDay,Day,3);
+                    GetWindowText(hReMont,Month,3);
+                    GetWindowText(hReYear,Year,5);
                     GetWindowText(hWei,Weight,3);
                     GetWindowText(hHeig,Height,4);
                     if(strcmp(Gender,"") == 0 || strcmp(Illness,"") == 0 || strcmp(Firstname,"") == 0 || strcmp(Lastname,"") == 0 || strcmp(Day,"") == 0 || strcmp(Month,"") == 0 || strcmp(Year,"") == 0 || strcmp(Weight,"") == 0 || strcmp(Height,"") == 0){
                         MessageBoxW(hWnd,L"Please Input All Patient Detail",L"Error",MB_OK | MB_ICONEXCLAMATION);
                     }else{MessageBoxW(hWnd,L"NICE",L"Error",MB_OK);
+                            cout << Year <<" " << Day;
                         if(pdata_base(Gender,Illness,Firstname,Lastname,Day,Month,Year,Weight,Height) == 10){
                             MessageBoxW(hWnd,L"You can only input alpha here!",L"Error",MB_OK | MB_ICONEXCLAMATION);
                         }else if(pdata_base(Gender,Illness,Firstname,Lastname,Day,Month,Year,Weight,Height) == 11){
@@ -109,6 +110,11 @@ LRESULT CALLBACK WindowProcedure(HWND hWnd,UINT msg,WPARAM wp,LPARAM lp){
                             MessageBoxW(hWnd,L"Please Input Day between 1-30 !",L"Error",MB_OK | MB_ICONEXCLAMATION);
                         }else if(pdata_base(Gender,Illness,Firstname,Lastname,Day,Month,Year,Weight,Height) == 17){
                             MessageBoxW(hWnd,L"Please CHECK  Years !",L"Error",MB_OK | MB_ICONEXCLAMATION);
+                        }else{
+                            writeData(Gender,Illness,Firstname,Lastname,Day,Month,Year,Weight,Height);
+                            EnumChildWindows(hWnd,DestoryChildCallback, NULL);
+                            LoadImgDoc();     
+                            DoctorPage(hWnd);
                         }
                     }
                     

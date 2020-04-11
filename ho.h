@@ -677,7 +677,7 @@ bool OverHeight(string He){
 
 
 
-int pdata_base(char Gender[10],char Illness[20],char Firstname[10],char Lastname[10],char Day[2],char Month[2],char Year[4],char Wei[3],char Hei[4]){
+int pdata_base(char Gender[10],char Illness[20],char Firstname[10],char Lastname[10],char Day[3],char Month[3],char Year[5],char Wei[3],char Hei[4]){
 //cin.clear(); 
 string fname(Firstname),lname(Lastname),d(Day),mon(Month),yea(Year);
 int day=atoi(d.c_str()), month=atoi(mon.c_str()), year=atoi(yea.c_str()) ;
@@ -843,7 +843,7 @@ do  //THIS FOR CHECK AND GET DATE OF BIRTH !
             }
         }   
     }
-    else if(year<1919 or year > 2020)
+    else if(year<1919 || year > 2020)
         {
             chb = 0;
             return 17;
@@ -851,16 +851,20 @@ do  //THIS FOR CHECK AND GET DATE OF BIRTH !
            cout<<"\t\t\tPlease CHECK  Years ! \n";
            changeColor(7);*/
         }
-     cin.clear();     
+     //cin.clear();     
  } while( chb !=1 );
 //=======================================================================
 // all here is for check before push back 
 //ShowHasDone(day,month,year,fname,lname,weight,height);
 //======================================================
-
+}
+void writeData(char Gen[10],char Ill[20],char Firstname[10],char Lastname[10],char Day[3],char Month[3],char Year[5],char Wei[3],char Hei[4]){
 //========================================================
-ofstream write("database/userdatabase.txt",ios::out|ios::app); //Plan to delete what we just added
-write << "Name : " <<fname<< " "<< "LastName : " <<lname << "  Date of Birth: "<<day<<" / "<<month<<" / "<< year << "   height:" << height << "  Weight:" << weight << endl;
+string fname(Firstname),lname(Lastname),d(Day),mon(Month),yea(Year), weight(Wei),height(Hei),Gender(Gen),Illness(Ill);
+int day=atoi(d.c_str()), month=atoi(mon.c_str()), year=atoi(yea.c_str());
+
+ofstream write("database\\userdatabase.txt",ios::out|ios::app); //Plan to delete what we just added
+write << "Name : " <<fname<< " "<< "LastName : " <<lname << "  Date of Birth: "<<day<<" / "<<month<<" / "<< year << "   height:" << height << "  Weight:" << weight << " Gender:" << Gender << " Illness:" << Illness << endl;
 write.close();
 
 }
