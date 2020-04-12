@@ -1,5 +1,3 @@
-Name : asdas LastName : asdasd  Date of Birth: 0 / 1 / 1999   height:145  Weight:25
-Name : asdsad LastName : asdasd  Date of Birth: 2 / 12 / 2000   height:145  Weight:45
-Name : wisarud LastName : Wongta  Date of Birth: 2 / 6 / 2000   height:163  Weight:60
-Name : pirachat LastName : kotchanil  Date of Birth: 12 / 12 / 2001   height:172  Weight:70 Gender:Man Illness:Eye
-Name : zxc LastName : zxc  Date of Birth: 2 / 2 / 2000   height:123  Weight:25 Gender:Man Illness:Abdominal
+Name : pirachat LastName : kotchanil  Date of Birth: 10 / 12 / 2001   height:172  Weight:70 Gender:Man Illness:Eye No.1
+Name : zxc LastName : zxc  Date of Birth: 7 / 6 / 2002   height:123  Weight:25 Gender:Man Illness:Abdominal No.2
+Name : Phirachat LastName : Kochanil  Date of Birth: 9 / 11 / 2000   height:171  Weight:71 Gender:Man Illness:Abdominal No.3

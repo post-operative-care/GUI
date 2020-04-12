@@ -10,6 +10,7 @@
 #include<conio.h>
 #include <stdlib.h>
 #include<stdio.h>
+#include<ctime>
 
 
 //HANDLE h = GetStdHandle( STD_OUTPUT_HANDLE );
@@ -558,7 +559,7 @@ int find_Sequence(string GetUsername)
         sscanf(text1.c_str(),"ID = %s %[^No.]No.%d",&user,&blank1,&sequ);
         if (DecrypttionID(user) == GetUsername)
         {
-            cout << sequ << endl;
+            
             return sequ;
         }
         
@@ -897,9 +898,81 @@ void writeData(char Gen[10],char Ill[20],char Firstname[10],char Lastname[10],ch
 string fname(Firstname),lname(Lastname),d(Day),mon(Month),yea(Year), weight(Wei),height(Hei),Gender(Gen),Illness(Ill);
 int day=atoi(d.c_str()), month=atoi(mon.c_str()), year=atoi(yea.c_str());
 
-ofstream write("database\\userdatabase.txt",ios::out|ios::app); //Plan to delete what we just added
+ofstream write("database\\userdatabase.txt",ios::out | ios::app); //Plan to delete what we just added
 write << "Name : " <<fname<< " "<< "LastName : " <<lname << "  Date of Birth: "<<day<<" / "<<month<<" / "<< year << "   height:" << height << "  Weight:" << weight << " Gender:" << Gender << " Illness:" << Illness << endl;
 write.close();
 
+}
+
+int CalAge(int d,int m,int y) 
+{
+    int dn,mn,yn,age ;
+    time_t now = time(0);
+    tm *ltm = localtime(&now);
+    dn = ltm->tm_mday ;
+    mn = (1 + ltm->tm_mon) ;
+    yn = 1900 + ltm->tm_year;
+    
+    //cout << "now date = " << dn << " " << mn << " " << yn << endl;
+    // กี่เดือน =(12-m)+mn
+    // กี่วัน = 
+    // age = (yn-y)-
+    
+    if (mn >= m)
+    {
+        if (dn >= d)
+        {
+            return yn-y; 
+        }
+        else
+        {
+            return yn-y-1;
+        }
+        
+    }
+    else
+    {
+        return yn-y-1;
+    }
+    
+    
+}
+
+
+string SDataDB(int ID,char data_case) // N L D W H G I O
+{
+    ifstream file_input("database\\userdatabase.txt");
+    string text1;
+    char name[50],lastname[50],dofb[50],gender[50],illness[50] ;
+    char height[10],weight[10],number[10] ;
+    int date,month,year;
+    //Name : Phirachat LastName : Kochanil  Date of Birth: 9 / 11 / 2000   height:171  Weight:71 Gender:Man Illness:Abdominal No.3
+    char fomat[] = "Name : %s LastName : %s  Date of Birth: %d / %d / %d   height:%s  Weight:%s Gender:%s Illness:%s No.%s";
+    while (getline(file_input,text1))
+    {
+        sscanf(text1.c_str(),fomat,&name,&lastname,&date,&month,&year,&height,&weight,&gender,&illness,&number);
+        
+        int Age = CalAge(date,month,year);
+        
+        string dob = to_string(date)+"/"+to_string(month)+"/"+to_string(year);
+        
+         if (ID == stoi(number))
+         {
+             switch (data_case)
+             {
+                case 'N': return name;           break;
+                case 'L': return lastname;       break;
+                case 'D': return dob;            break;
+                case 'W': return weight;         break;
+                case 'H': return height;         break;    
+                case 'G': return gender;         break;
+                case 'I': return illness;        break;
+                case 'O': return number;         break;
+                case 'A': return to_string(Age); break;    
+                default: return "Error, Please Try Again ! "; break;
+            }
+        } 
+    }
+    
 }
 
