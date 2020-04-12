@@ -1,1 +1,1 @@
-else if(pdata_base(Gender,Illness,Firstname,Lastname,Day,Month,Year,Weight,Height)
+SDataDB(3,'A'

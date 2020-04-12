@@ -19,10 +19,11 @@ void LoadImgPa();
 void DoctorPage(HWND);
 void LoadImgDoc();
 HWND hTop,hUser,hPass,hReFn,hReLn,hReDay,hReMont,hReYear,hWei,hHeig,hGen;
-HBITMAP hLogBg,hLogin,hReBg,hSi,hBa,hPaProM,hPaBg,hPaDiet,hPaPro,hPaWou,hPaActi,hPaLogout,hDocBg,hDocPro;
+HBITMAP hLogBg,hLogin,hReBg,hSi,hBa,hPaProM,hPaBg,hPaDiet,hPaPro,hPaWou,hPaActi,hPaLogout,hDocBg,hDocPro,hDocRe;
 HFONT hFont;
-char gender[5],type,user[20];
-string opLogin;
+char type,user[20],Illness[10];
+string opLogin,gender;
+int id;
 
 
 
@@ -68,11 +69,13 @@ LRESULT CALLBACK WindowProcedure(HWND hWnd,UINT msg,WPARAM wp,LPARAM lp){
                         //cout << type;
                         if(type == 'D'){
                             EnumChildWindows(hWnd,DestoryChildCallback, NULL);
-
+                            id=find_Sequence(username);
                             LoadImgDoc();     
                             DoctorPage(hWnd);
                         }else{
                             EnumChildWindows(hWnd,DestoryChildCallback, NULL);
+                            id=find_Sequence(username);
+                            cout << id;
                             LoadImgPa();
                             PatientPage(hWnd); 
                         }
@@ -153,7 +156,9 @@ void LoginPage(HWND hWnd){
     HWND hLog = CreateWindowW(L"Static",NULL,WS_VISIBLE | WS_CHILD | SS_BITMAP,0,0,1280,720,hWnd,NULL,NULL,NULL);
     SendMessageW(hLog,STM_SETIMAGE,IMAGE_BITMAP,(LPARAM)hLogBg);
 
+    CreateWindowW(L"Static",L"Username:",WS_VISIBLE | WS_CHILD,340,297,100,20,hWnd,NULL,NULL,NULL);
     hUser = CreateWindowW(L"Edit",L"",WS_VISIBLE | WS_CHILD | ES_AUTOHSCROLL | WS_BORDER,340,317,257,20,hWnd,NULL,NULL,NULL);//Edit for username
+    CreateWindowW(L"Static",L"Password:",WS_VISIBLE | WS_CHILD,340,360,100,20,hWnd,NULL,NULL,NULL);
     hPass = CreateWindowW(L"Edit",L"",WS_VISIBLE | WS_CHILD | ES_AUTOHSCROLL | WS_BORDER | ES_PASSWORD,340,380,257,20,hWnd,NULL,NULL,NULL);//Edit for password
     
     HWND hLogBut = CreateWindowW(L"Button",NULL,WS_VISIBLE | WS_CHILD | BS_BITMAP,400,479,101,45,hWnd,(HMENU)LOG_IN,NULL,NULL);
@@ -219,6 +224,7 @@ BOOL CALLBACK DestoryChildCallback(
 }
 
 void PatientPage(HWND hWnd){ 
+    
     HWND hPro = CreateWindowW(L"Static",NULL,WS_VISIBLE | WS_CHILD | SS_BITMAP,216,84,247,247,hWnd,NULL,NULL,NULL);
     SendMessageW(hPro,STM_SETIMAGE,IMAGE_BITMAP,(LPARAM)hPaProM);
 
@@ -233,18 +239,42 @@ void PatientPage(HWND hWnd){
     SendMessageW(hWoubut,BM_SETIMAGE,IMAGE_BITMAP,(LPARAM)hPaWou);
     HWND hActbut = CreateWindowW(L"Button",NULL,WS_VISIBLE | WS_CHILD | BS_BITMAP,91,467,200,30,hWnd,NULL,NULL,NULL); //button for Activity menu
     SendMessageW(hActbut,BM_SETIMAGE,IMAGE_BITMAP,(LPARAM)hPaActi);
-    /*char fname[10],lnmae[10];
-    find_name(fname);*/
-    HWND hPaName = CreateWindowW(L"Edit",L"",WS_VISIBLE | WS_CHILD | ES_READONLY,466,112,205,20,hWnd,NULL,NULL,NULL);//name
-    //SetWindowTextW(hPaName,name);
+    string sfname,slname,sAge,sWeight,sHeight,sDate,sIllness;
+    char fname[20],lname[20],Age[3],Weight[4],Height[4],Date[10],Fullname[50];
+    sfname = SDataDB(id,'N');
+    slname = SDataDB(id,'L');
+    sDate = SDataDB(id,'D');
+    sAge = SDataDB(id,'A');
+    sHeight = SDataDB(id,'H');
+    sWeight = SDataDB(id,'W');
+    sIllness = SDataDB(id,'I');
 
-    HWND hPaDate = CreateWindowW(L"Edit",L"",WS_VISIBLE | WS_CHILD | ES_READONLY,859,110,150,20,hWnd,NULL,NULL,NULL);//date
+    strcpy(fname,sfname.c_str());
+    strcpy(lname,slname.c_str());
+    strcpy(Age,sAge.c_str());
+    strcpy(Weight,sWeight.c_str());
+    strcpy(Height,sHeight.c_str());
+    strcpy(Date,sDate.c_str());
+    strcpy(Illness,sIllness.c_str());
 
-    HWND hPaAge = CreateWindowW(L"Edit",L"",WS_VISIBLE | WS_CHILD | ES_READONLY,779,136,40,20,hWnd,NULL,NULL,NULL);//age
+    strcat(Fullname,fname);
+    strcat(Fullname,"  ");
+    strcat(Fullname,lname);
 
-    HWND hPaHeight = CreateWindowW(L"Edit",L"",WS_VISIBLE | WS_CHILD | ES_READONLY,804,168,65,20,hWnd,NULL,NULL,NULL);//height
+    HWND hPaName = CreateWindowW(L"Static",L"",WS_VISIBLE | WS_CHILD,466,115,150,15,hWnd,NULL,NULL,NULL);//name
+    SetWindowText(hPaName,Fullname);
 
-    HWND hPaWeight = CreateWindowW(L"Edit",L"",WS_VISIBLE | WS_CHILD | ES_READONLY,808,193,65,20,hWnd,NULL,NULL,NULL);//weight
+    HWND hPaDate = CreateWindowW(L"Static",L"",WS_VISIBLE | WS_CHILD | ES_READONLY,859,112,90,15,hWnd,NULL,NULL,NULL);//date
+    SetWindowText(hPaDate,Date);
+
+    HWND hPaAge = CreateWindowW(L"Static",L"",WS_VISIBLE | WS_CHILD | ES_READONLY,779,138,25,15,hWnd,NULL,NULL,NULL);//age
+    SetWindowText(hPaAge,Age);
+    
+    HWND hPaHeight = CreateWindowW(L"Static",L"",WS_VISIBLE | WS_CHILD | ES_READONLY,804,168,35,15,hWnd,NULL,NULL,NULL);//height
+    SetWindowText(hPaHeight,Height);
+
+    HWND hPaWeight = CreateWindowW(L"Static",L"",WS_VISIBLE | WS_CHILD | ES_READONLY,808,195,35,15,hWnd,NULL,NULL,NULL);//weight
+    SetWindowText(hPaWeight,Weight);
 
 
     CreateWindowW(L"Edit",L"",WS_VISIBLE | WS_CHILD | ES_MULTILINE | WS_VSCROLL | WS_HSCROLL |  ES_READONLY,344,287,842,363,hWnd,NULL,NULL,NULL);
@@ -254,7 +284,13 @@ void PatientPage(HWND hWnd){
 }
 
 void LoadImgPa(){ //Loadimage for patient page
-    hPaProM = (HBITMAP)LoadImageW(NULL,L"PatientPage\\male.bmp",IMAGE_BITMAP,0,0,LR_LOADFROMFILE);//male profile pic
+    gender = SDataDB(id,'G');
+    if(gender == "Man"){
+        hPaProM = (HBITMAP)LoadImageW(NULL,L"PatientPage\\male.bmp",IMAGE_BITMAP,0,0,LR_LOADFROMFILE);
+    }else{
+        hPaProM = (HBITMAP)LoadImageW(NULL,L"PatientPage\\female.bmp",IMAGE_BITMAP,0,0,LR_LOADFROMFILE);
+    }
+    //male profile pic
     hPaBg = (HBITMAP)LoadImageW(NULL,L"PatientPage\\patient oage.bmp",IMAGE_BITMAP,0,0,LR_LOADFROMFILE);//Background
 
     hPaActi = (HBITMAP)LoadImageW(NULL,L"PatientPage\\Activity.bmp",IMAGE_BITMAP,0,0,LR_LOADFROMFILE);
@@ -267,29 +303,50 @@ void LoadImgPa(){ //Loadimage for patient page
 }
 
 void DoctorPage(HWND hWnd){
-    HWND hPro = CreateWindowW(L"Static",NULL,WS_VISIBLE | WS_CHILD | SS_BITMAP,129,68,247,247,hWnd,NULL,NULL,NULL);
+    HWND hPro = CreateWindowW(L"Static",NULL,WS_VISIBLE | WS_CHILD | SS_BITMAP,202,246,106,105,hWnd,NULL,NULL,NULL);
     SendMessageW(hPro,STM_SETIMAGE,IMAGE_BITMAP,(LPARAM)hDocPro);
     
     HWND hDoc = CreateWindowW(L"Static",NULL,WS_VISIBLE | WS_CHILD | SS_BITMAP,0,0,1280,720,hWnd,NULL,NULL,NULL);
     SendMessageW(hDoc,STM_SETIMAGE,IMAGE_BITMAP,(LPARAM)hDocBg);
 
-    HWND hRegisbut = CreateWindowW(L"Button",NULL,WS_VISIBLE | WS_CHILD | BS_BITMAP | BS_FLAT,987,93,146,24,hWnd,(HMENU)REGISTER,NULL,NULL); //button for reister menu
-    //SendMessageW(hRegisbut,BM_SETIMAGE,IMAGE_BITMAP,(LPARAM)hPaClick);
-    HWND hTracbut = CreateWindowW(L"Button",NULL,WS_VISIBLE | WS_CHILD | BS_BITMAP | BS_FLAT,987,138,146,24,hWnd,NULL,NULL,NULL); //button for track menu
-    //SendMessageW(hTracbut,BM_SETIMAGE,IMAGE_BITMAP,(LPARAM)hPaClick);
+    HWND hRegisbut = CreateWindowW(L"Button",NULL,WS_VISIBLE | WS_CHILD | BS_BITMAP | BS_FLAT,148,481,210,45,hWnd,(HMENU)REGISTER,NULL,NULL); //button for reister menu
+    SendMessageW(hRegisbut,BM_SETIMAGE,IMAGE_BITMAP,(LPARAM)hDocRe);
     
-    HWND hLogout = CreateWindowW(L"Button",NULL,WS_VISIBLE | WS_CHILD | BS_BITMAP,76,631,70,20,hWnd,(HMENU)LOG_OUT,NULL,NULL);
+    HWND hLogout = CreateWindowW(L"Button",NULL,WS_VISIBLE | WS_CHILD | BS_BITMAP,210,559,90,32,hWnd,(HMENU)LOG_OUT,NULL,NULL);
     SendMessageW(hLogout,BM_SETIMAGE,IMAGE_BITMAP,(LPARAM)hPaLogout);
+    string sfname,slname;
+    char fname[15],lname[15],Fullname[30];
+    sfname = SDataDB(id,'N');
+    slname = SDataDB(id,'L');
+    
+    strcpy(fname,sfname.c_str());
+    strcpy(lname,slname.c_str());
+
+    strcat(Fullname,"Dr.");
+    strcat(Fullname,fname);
+    strcat(Fullname,"  ");
+    strcat(Fullname,lname);
+
+    HWND DrName = CreateWindowW(L"Static",NULL,WS_VISIBLE | WS_CHILD | SS_CENTER,126,381,250,20,hWnd,NULL,NULL,NULL);
+    SetWindowText(DrName,Fullname);
+
+    HWND hEdit = CreateWindowW(L"Edit",L"",WS_VISIBLE | WS_CHILD | ES_MULTILINE | WS_VSCROLL | WS_HSCROLL |  ES_READONLY,450,87,731,565,hWnd,NULL,NULL,NULL);
 }
 
 void LoadImgDoc(){
-    hDocBg = (HBITMAP)LoadImageW(NULL,L"DoctorPage\\wallpaper.bmp",IMAGE_BITMAP,0,0,LR_LOADFROMFILE);
+    gender = SDataDB(id,'G');
+    if(gender == "Man"){
+        hDocPro = (HBITMAP)LoadImageW(NULL,L"DoctorPage\\doc_male.bmp",IMAGE_BITMAP,106,105,LR_LOADFROMFILE); //male profile pic
+    }else{
+        hDocPro = (HBITMAP)LoadImageW(NULL,L"DoctorPage\\doc_female.bmp",IMAGE_BITMAP,106,105,LR_LOADFROMFILE); //male profile pic
+    }
+    hDocBg = (HBITMAP)LoadImageW(NULL,L"DoctorPage\\Doctor_page.bmp",IMAGE_BITMAP,0,0,LR_LOADFROMFILE);
 
-    hDocPro = (HBITMAP)LoadImageW(NULL,L"DoctorPage\\man.bmp",IMAGE_BITMAP,0,0,LR_LOADFROMFILE); //male profile pic
+    
 
-    //hPaClick = (HBITMAP)LoadImageW(NULL,L"PatientPage\\button click.bmp",IMAGE_BITMAP,146,24,LR_LOADFROMFILE);
+    hDocRe = (HBITMAP)LoadImageW(NULL,L"DoctorPage\\register_button.bmp",IMAGE_BITMAP,0,0,LR_LOADFROMFILE);
 
-    hPaLogout = (HBITMAP)LoadImageW(NULL,L"PatientPage\\logout.bmp",IMAGE_BITMAP,0,0,LR_LOADFROMFILE);
+    hPaLogout = (HBITMAP)LoadImageW(NULL,L"DoctorPage\\LogOut_button.bmp",IMAGE_BITMAP,0,0,LR_LOADFROMFILE);
     
 
 }
