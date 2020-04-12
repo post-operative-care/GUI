@@ -404,29 +404,26 @@ void sign_up_page()
 void register_page() 
 /*not spacial in this func just make absaction for easy way to use in main*/
 {
-char ID[69];
-string id_one;
-char Pass[69];
-string pass_one;
+    char ID[69];
+    string id_one;
+    char Pass[69];
+    string pass_one;
 
     ofstream file_out("database/user_data.txt",ios::app);
-    
     sign_up_page();
-    /*id_one = VecID;
-    strcpy(ID,id_one.c_str());
-    pass_one = VecPASS;
-    strcpy(Pass,pass_one.c_str());
-    for (int i = 0; i < 69 && ID[i] != '\0'; i++){
-        ID[i]=ID[i]-12;
-    }
-    for (int j = 0; j < 69 && Pass[j] != '\0'; j++){
-        Pass[j]=Pass[j]-8;
-    } */
+    ifstream file_in("database/user_data.txt");
+    string text1;
+    int Sequence = 0;
+    char temp1[1];
 
-    //cout << "ID  = " << VecID[0] << " PASSWORD : " << VecID[0] << endl;
-    
-    file_out << "ID = " << VecID[0] << " PASSWORD : " << VecPASS[0] << " | TYPE : P" << endl;
-    
+    while (getline(file_in,text1))
+    {
+        Sequence++;
+    }
+
+    file_in.close();
+    file_out << "ID = " << VecID[0] << " PASSWORD : " << VecPASS[0] << " | TYPE : P No." << Sequence+1 <<  endl;
+    file_out.close();
     
 }
 
@@ -550,6 +547,25 @@ void Start(){
 }*/
 
 
+int find_Sequence(string GetUsername)
+{
+    ifstream file_in("database/user_data.txt");
+    string text1;
+    char blank1[30],user[20];
+    int sequ;
+    while (getline(file_in,text1))
+    {
+        sscanf(text1.c_str(),"ID = %s %[^No.]No.%d",&user,&blank1,&sequ);
+        if (DecrypttionID(user) == GetUsername)
+        {
+            cout << sequ << endl;
+            return sequ;
+        }
+        
+    }
+    return 0;
+    file_in.close();
+}
 
 //from pdatabase.h
 
