@@ -70,6 +70,7 @@ LRESULT CALLBACK WindowProcedure(HWND hWnd,UINT msg,WPARAM wp,LPARAM lp){
                         //cout << type;
                         if(type == 'D'){
                             EnumChildWindows(hWnd,DestoryChildCallback, NULL);
+                            
                             LoadImgDoc();     
                             DoctorPage(hWnd);
                         }else{
@@ -179,7 +180,7 @@ void RegisterPage(HWND hWnd){
     SendMessageW(hGen,CB_ADDSTRING,0,(LPARAM)L"Man");
     SendMessageW(hGen,CB_ADDSTRING,0,(LPARAM)L"Woman");
 
-    SendMessageW(hGen,CB_SETCURSEL,2,0);
+    //SendMessageW(hGen,CB_SETCURSEL,2,0);
 
     hTop = CreateWindowW(L"Combobox",L"",CBS_DROPDOWN | CBS_HASSTRINGS | WS_CHILD | WS_OVERLAPPED | WS_VISIBLE,568,449,222,350,hWnd,NULL,NULL,NULL); //Combobox for Type of Patient
     SendMessageW(hTop,CB_ADDSTRING,0,(LPARAM)L"Abdominal");
