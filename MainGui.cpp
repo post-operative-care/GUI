@@ -19,7 +19,7 @@ void LoadImgPa();
 void DoctorPage(HWND);
 void LoadImgDoc();
 HWND hTop,hUser,hPass,hReFn,hReLn,hReDay,hReMont,hReYear,hWei,hHeig,hGen;
-HBITMAP hLogBg,hLogin,hReBg,hSi,hPaProM,hPaBg,hPaDiet,hPaPro,hPaWou,hPaActi,hPaLogout,hDocBg,hDocPro;
+HBITMAP hLogBg,hLogin,hReBg,hSi,hBa,hPaProM,hPaBg,hPaDiet,hPaPro,hPaWou,hPaActi,hPaLogout,hDocBg,hDocPro;
 HFONT hFont;
 char gender[5],type,user[20];
 string opLogin;
@@ -65,8 +65,6 @@ LRESULT CALLBACK WindowProcedure(HWND hWnd,UINT msg,WPARAM wp,LPARAM lp){
                     }else{
                         opLogin = login_page(username,pass);
                         sscanf(opLogin.c_str(),"%s %c",&user,&type);
-                        MessageBoxW(hWnd,L"Succes",L"test",MB_OK);
-                        
                         //cout << type;
                         if(type == 'D'){
                             EnumChildWindows(hWnd,DestoryChildCallback, NULL);
@@ -199,13 +197,14 @@ void RegisterPage(HWND hWnd){
     HWND hSign = CreateWindowW(L"Button",NULL,WS_VISIBLE | WS_CHILD | BS_BITMAP,740,549,205,43,hWnd,(HMENU)SIGN_UP,NULL,NULL);
     SendMessageW(hSign,BM_SETIMAGE,IMAGE_BITMAP,(LPARAM)hSi);
 
-    HWND hBack = CreateWindowW(L"Button",NULL,WS_VISIBLE | WS_CHILD | BS_BITMAP,458,51,119,26,hWnd,(HMENU)BACK_TOMENU,NULL,NULL);
+    HWND hBack = CreateWindowW(L"Button",NULL,WS_VISIBLE | WS_CHILD | BS_BITMAP | BS_FLAT,458,51,119,26,hWnd,(HMENU)BACK_TOMENU,NULL,NULL);
+    SendMessageW(hBack,BM_SETIMAGE,IMAGE_BITMAP,(LPARAM)hBa);
 
 }
 void LoadImgRe(){ //loadimage for register page
     hReBg = (HBITMAP)LoadImageW(NULL,L"RegisterPage\\ReBg.bmp",IMAGE_BITMAP,0,0,LR_LOADFROMFILE);
     hSi = (HBITMAP)LoadImageW(NULL,L"RegisterPage\\button_registerpage.bmp",IMAGE_BITMAP,0,0,LR_LOADFROMFILE);
-    
+    hBa = (HBITMAP)LoadImageW(NULL,L"RegisterPage\\back to home.bmp",IMAGE_BITMAP,0,0,LR_LOADFROMFILE);
 }
 BOOL CALLBACK DestoryChildCallback(
   HWND   hwnd,
@@ -274,11 +273,11 @@ void DoctorPage(HWND hWnd){
     HWND hDoc = CreateWindowW(L"Static",NULL,WS_VISIBLE | WS_CHILD | SS_BITMAP,0,0,1280,720,hWnd,NULL,NULL,NULL);
     SendMessageW(hDoc,STM_SETIMAGE,IMAGE_BITMAP,(LPARAM)hDocBg);
 
-    /*HWND hRegisbut = CreateWindowW(L"Button",NULL,WS_VISIBLE | WS_CHILD | BS_BITMAP | BS_FLAT,987,93,146,24,hWnd,(HMENU)REGISTER,NULL,NULL); //button for reister menu
-    SendMessageW(hRegisbut,BM_SETIMAGE,IMAGE_BITMAP,(LPARAM)hPaClick);
+    HWND hRegisbut = CreateWindowW(L"Button",NULL,WS_VISIBLE | WS_CHILD | BS_BITMAP | BS_FLAT,987,93,146,24,hWnd,(HMENU)REGISTER,NULL,NULL); //button for reister menu
+    //SendMessageW(hRegisbut,BM_SETIMAGE,IMAGE_BITMAP,(LPARAM)hPaClick);
     HWND hTracbut = CreateWindowW(L"Button",NULL,WS_VISIBLE | WS_CHILD | BS_BITMAP | BS_FLAT,987,138,146,24,hWnd,NULL,NULL,NULL); //button for track menu
-    SendMessageW(hTracbut,BM_SETIMAGE,IMAGE_BITMAP,(LPARAM)hPaClick);
-    */
+    //SendMessageW(hTracbut,BM_SETIMAGE,IMAGE_BITMAP,(LPARAM)hPaClick);
+    
     HWND hLogout = CreateWindowW(L"Button",NULL,WS_VISIBLE | WS_CHILD | BS_BITMAP,76,631,70,20,hWnd,(HMENU)LOG_OUT,NULL,NULL);
     SendMessageW(hLogout,BM_SETIMAGE,IMAGE_BITMAP,(LPARAM)hPaLogout);
 }
