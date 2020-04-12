@@ -5,7 +5,7 @@
 #define SIGN_UP 2
 #define LOG_OUT 3
 #define REGISTER 4
-#define Doctor 5
+#define BACK_TOMENU 5
 #define Patient 6
 LRESULT CALLBACK WindowProcedure(HWND,UINT,WPARAM,LPARAM);
 
@@ -19,7 +19,7 @@ void LoadImgPa();
 void DoctorPage(HWND);
 void LoadImgDoc();
 HWND hTop,hUser,hPass,hReFn,hReLn,hReDay,hReMont,hReYear,hWei,hHeig,hGen;
-HBITMAP hLogBg,hLogin,hReBg,hSi,hPaProM,hPaBg,hPaClick,hPaLogout,hDocBg,hDocPro;
+HBITMAP hLogBg,hLogin,hReBg,hSi,hPaProM,hPaBg,hPaDiet,hPaPro,hPaWou,hPaActi,hPaLogout,hDocBg,hDocPro;
 HFONT hFont;
 char gender[5],type,user[20];
 string opLogin;
@@ -70,7 +70,7 @@ LRESULT CALLBACK WindowProcedure(HWND hWnd,UINT msg,WPARAM wp,LPARAM lp){
                         //cout << type;
                         if(type == 'D'){
                             EnumChildWindows(hWnd,DestoryChildCallback, NULL);
-                            
+
                             LoadImgDoc();     
                             DoctorPage(hWnd);
                         }else{
@@ -129,6 +129,11 @@ LRESULT CALLBACK WindowProcedure(HWND hWnd,UINT msg,WPARAM wp,LPARAM lp){
                     EnumChildWindows(hWnd,DestoryChildCallback, NULL);
                     LoadImgRe();
                     RegisterPage(hWnd);
+                    break;
+                case BACK_TOMENU:
+                    EnumChildWindows(hWnd,DestoryChildCallback, NULL);
+                    LoadImgDoc();     
+                    DoctorPage(hWnd);
                     break;
             }
             break;       
@@ -194,6 +199,8 @@ void RegisterPage(HWND hWnd){
     HWND hSign = CreateWindowW(L"Button",NULL,WS_VISIBLE | WS_CHILD | BS_BITMAP,740,549,205,43,hWnd,(HMENU)SIGN_UP,NULL,NULL);
     SendMessageW(hSign,BM_SETIMAGE,IMAGE_BITMAP,(LPARAM)hSi);
 
+    HWND hBack = CreateWindowW(L"Button",NULL,WS_VISIBLE | WS_CHILD | BS_BITMAP,458,51,119,26,hWnd,(HMENU)BACK_TOMENU,NULL,NULL);
+
 }
 void LoadImgRe(){ //loadimage for register page
     hReBg = (HBITMAP)LoadImageW(NULL,L"RegisterPage\\ReBg.bmp",IMAGE_BITMAP,0,0,LR_LOADFROMFILE);
@@ -213,24 +220,37 @@ BOOL CALLBACK DestoryChildCallback(
 }
 
 void PatientPage(HWND hWnd){ 
-    HWND hPro = CreateWindowW(L"Static",NULL,WS_VISIBLE | WS_CHILD | SS_BITMAP,129,68,247,247,hWnd,NULL,NULL,NULL);
+    HWND hPro = CreateWindowW(L"Static",NULL,WS_VISIBLE | WS_CHILD | SS_BITMAP,216,84,247,247,hWnd,NULL,NULL,NULL);
     SendMessageW(hPro,STM_SETIMAGE,IMAGE_BITMAP,(LPARAM)hPaProM);
 
     HWND hPa = CreateWindowW(L"Static",NULL,WS_VISIBLE | WS_CHILD | SS_BITMAP,0,0,1280,720,hWnd,NULL,NULL,NULL);
     SendMessageW(hPa,STM_SETIMAGE,IMAGE_BITMAP,(LPARAM)hPaBg);
 
-    HWND hDietbut = CreateWindowW(L"Button",NULL,WS_VISIBLE | WS_CHILD | BS_BITMAP | BS_FLAT,987,93,146,24,hWnd,NULL,NULL,NULL); //button for diet menu
-    SendMessageW(hDietbut,BM_SETIMAGE,IMAGE_BITMAP,(LPARAM)hPaClick);
-    HWND hProbut = CreateWindowW(L"Button",NULL,WS_VISIBLE | WS_CHILD | BS_BITMAP | BS_FLAT,987,138,146,24,hWnd,NULL,NULL,NULL); //button for Proni menu
-    SendMessageW(hProbut,BM_SETIMAGE,IMAGE_BITMAP,(LPARAM)hPaClick);
-    HWND hWoubut = CreateWindowW(L"Button",NULL,WS_VISIBLE | WS_CHILD | BS_BITMAP | BS_FLAT,987,183,146,24,hWnd,NULL,NULL,NULL); //button for Wound menu
-    SendMessageW(hWoubut,BM_SETIMAGE,IMAGE_BITMAP,(LPARAM)hPaClick);
-    HWND hActbut = CreateWindowW(L"Button",NULL,WS_VISIBLE | WS_CHILD | BS_BITMAP | BS_FLAT,987,228,146,24,hWnd,NULL,NULL,NULL); //button for Activity menu
-    SendMessageW(hActbut,BM_SETIMAGE,IMAGE_BITMAP,(LPARAM)hPaClick);
+    HWND hDietbut = CreateWindowW(L"Button",NULL,WS_VISIBLE | WS_CHILD | BS_BITMAP,91,332,200,30,hWnd,NULL,NULL,NULL); //button for diet menu
+    SendMessageW(hDietbut,BM_SETIMAGE,IMAGE_BITMAP,(LPARAM)hPaDiet);
+    HWND hProbut = CreateWindowW(L"Button",NULL,WS_VISIBLE | WS_CHILD | BS_BITMAP,91,377,200,30,hWnd,NULL,NULL,NULL); //button for Proni menu
+    SendMessageW(hProbut,BM_SETIMAGE,IMAGE_BITMAP,(LPARAM)hPaPro);
+    HWND hWoubut = CreateWindowW(L"Button",NULL,WS_VISIBLE | WS_CHILD | BS_BITMAP,91,422,200,30,hWnd,NULL,NULL,NULL); //button for Wound menu
+    SendMessageW(hWoubut,BM_SETIMAGE,IMAGE_BITMAP,(LPARAM)hPaWou);
+    HWND hActbut = CreateWindowW(L"Button",NULL,WS_VISIBLE | WS_CHILD | BS_BITMAP,91,467,200,30,hWnd,NULL,NULL,NULL); //button for Activity menu
+    SendMessageW(hActbut,BM_SETIMAGE,IMAGE_BITMAP,(LPARAM)hPaActi);
+    /*char fname[10],lnmae[10];
+    find_name(fname);*/
+    HWND hPaName = CreateWindowW(L"Edit",L"",WS_VISIBLE | WS_CHILD | ES_READONLY,466,112,205,20,hWnd,NULL,NULL,NULL);//name
+    //SetWindowTextW(hPaName,name);
 
-    CreateWindowW(L"Edit",L"",WS_VISIBLE | WS_CHILD | ES_MULTILINE | WS_VSCROLL | WS_HSCROLL |  ES_READONLY,500,325,710,350,hWnd,NULL,NULL,NULL);
+    HWND hPaDate = CreateWindowW(L"Edit",L"",WS_VISIBLE | WS_CHILD | ES_READONLY,859,110,150,20,hWnd,NULL,NULL,NULL);//date
 
-    HWND hLogout = CreateWindowW(L"Button",NULL,WS_VISIBLE | WS_CHILD | BS_BITMAP,76,631,112,35,hWnd,(HMENU)LOG_OUT,NULL,NULL);
+    HWND hPaAge = CreateWindowW(L"Edit",L"",WS_VISIBLE | WS_CHILD | ES_READONLY,779,136,40,20,hWnd,NULL,NULL,NULL);//age
+
+    HWND hPaHeight = CreateWindowW(L"Edit",L"",WS_VISIBLE | WS_CHILD | ES_READONLY,804,168,65,20,hWnd,NULL,NULL,NULL);//height
+
+    HWND hPaWeight = CreateWindowW(L"Edit",L"",WS_VISIBLE | WS_CHILD | ES_READONLY,808,193,65,20,hWnd,NULL,NULL,NULL);//weight
+
+
+    CreateWindowW(L"Edit",L"",WS_VISIBLE | WS_CHILD | ES_MULTILINE | WS_VSCROLL | WS_HSCROLL |  ES_READONLY,344,287,842,363,hWnd,NULL,NULL,NULL);
+
+    HWND hLogout = CreateWindowW(L"Button",NULL,WS_VISIBLE | WS_CHILD | BS_BITMAP,408,193,70,20,hWnd,(HMENU)LOG_OUT,NULL,NULL);
     SendMessageW(hLogout,BM_SETIMAGE,IMAGE_BITMAP,(LPARAM)hPaLogout);
 }
 
@@ -238,9 +258,12 @@ void LoadImgPa(){ //Loadimage for patient page
     hPaProM = (HBITMAP)LoadImageW(NULL,L"PatientPage\\male.bmp",IMAGE_BITMAP,0,0,LR_LOADFROMFILE);//male profile pic
     hPaBg = (HBITMAP)LoadImageW(NULL,L"PatientPage\\patient oage.bmp",IMAGE_BITMAP,0,0,LR_LOADFROMFILE);//Background
 
-    hPaClick = (HBITMAP)LoadImageW(NULL,L"PatientPage\\button click.bmp",IMAGE_BITMAP,146,24,LR_LOADFROMFILE);
+    hPaActi = (HBITMAP)LoadImageW(NULL,L"PatientPage\\Activity.bmp",IMAGE_BITMAP,0,0,LR_LOADFROMFILE);
+    hPaDiet = (HBITMAP)LoadImageW(NULL,L"PatientPage\\diet.bmp",IMAGE_BITMAP,0,0,LR_LOADFROMFILE);
+    hPaWou = (HBITMAP)LoadImageW(NULL,L"PatientPage\\wound care.bmp",IMAGE_BITMAP,0,0,LR_LOADFROMFILE);
+    hPaPro = (HBITMAP)LoadImageW(NULL,L"PatientPage\\Prohibit.bmp",IMAGE_BITMAP,0,0,LR_LOADFROMFILE);
 
-    hPaLogout = (HBITMAP)LoadImageW(NULL,L"PatientPage\\logout.bmp",IMAGE_BITMAP,120,0,LR_LOADFROMFILE);
+    hPaLogout = (HBITMAP)LoadImageW(NULL,L"PatientPage\\logout.bmp",IMAGE_BITMAP,0,0,LR_LOADFROMFILE);
     
 }
 
@@ -251,12 +274,12 @@ void DoctorPage(HWND hWnd){
     HWND hDoc = CreateWindowW(L"Static",NULL,WS_VISIBLE | WS_CHILD | SS_BITMAP,0,0,1280,720,hWnd,NULL,NULL,NULL);
     SendMessageW(hDoc,STM_SETIMAGE,IMAGE_BITMAP,(LPARAM)hDocBg);
 
-    HWND hRegisbut = CreateWindowW(L"Button",NULL,WS_VISIBLE | WS_CHILD | BS_BITMAP | BS_FLAT,987,93,146,24,hWnd,(HMENU)REGISTER,NULL,NULL); //button for reister menu
+    /*HWND hRegisbut = CreateWindowW(L"Button",NULL,WS_VISIBLE | WS_CHILD | BS_BITMAP | BS_FLAT,987,93,146,24,hWnd,(HMENU)REGISTER,NULL,NULL); //button for reister menu
     SendMessageW(hRegisbut,BM_SETIMAGE,IMAGE_BITMAP,(LPARAM)hPaClick);
     HWND hTracbut = CreateWindowW(L"Button",NULL,WS_VISIBLE | WS_CHILD | BS_BITMAP | BS_FLAT,987,138,146,24,hWnd,NULL,NULL,NULL); //button for track menu
     SendMessageW(hTracbut,BM_SETIMAGE,IMAGE_BITMAP,(LPARAM)hPaClick);
-    
-    HWND hLogout = CreateWindowW(L"Button",NULL,WS_VISIBLE | WS_CHILD | BS_BITMAP,76,631,112,35,hWnd,(HMENU)LOG_OUT,NULL,NULL);
+    */
+    HWND hLogout = CreateWindowW(L"Button",NULL,WS_VISIBLE | WS_CHILD | BS_BITMAP,76,631,70,20,hWnd,(HMENU)LOG_OUT,NULL,NULL);
     SendMessageW(hLogout,BM_SETIMAGE,IMAGE_BITMAP,(LPARAM)hPaLogout);
 }
 
@@ -265,9 +288,9 @@ void LoadImgDoc(){
 
     hDocPro = (HBITMAP)LoadImageW(NULL,L"DoctorPage\\man.bmp",IMAGE_BITMAP,0,0,LR_LOADFROMFILE); //male profile pic
 
-    hPaClick = (HBITMAP)LoadImageW(NULL,L"PatientPage\\button click.bmp",IMAGE_BITMAP,146,24,LR_LOADFROMFILE);
+    //hPaClick = (HBITMAP)LoadImageW(NULL,L"PatientPage\\button click.bmp",IMAGE_BITMAP,146,24,LR_LOADFROMFILE);
 
-    hPaLogout = (HBITMAP)LoadImageW(NULL,L"PatientPage\\logout.bmp",IMAGE_BITMAP,120,37,LR_LOADFROMFILE);
+    hPaLogout = (HBITMAP)LoadImageW(NULL,L"PatientPage\\logout.bmp",IMAGE_BITMAP,0,0,LR_LOADFROMFILE);
     
 
 }

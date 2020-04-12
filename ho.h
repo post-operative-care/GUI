@@ -567,6 +567,24 @@ int find_Sequence(string GetUsername)
     file_in.close();
 }
 
+/*char find_name(char name[]){
+    ifstream file_in("database/userdatabase.txt");
+    string text;
+    char name[10],blank[20];
+    while (getline(file_in,text))
+    {
+        sscanf(text.c_str(),"Name : %s %s",&name,blank[]);
+        if (DecrypttionID(user) == GetUsername)
+        {
+            return sequ;
+        }
+        //userdatabase use108 col
+    }
+    return 0;
+    file_in.close();
+}
+*/
+
 //from pdatabase.h
 
 bool isNotNumber(string s) 
