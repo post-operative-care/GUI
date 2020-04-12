@@ -9,9 +9,10 @@
 #include<cstdio>
 #include<conio.h>
 #include <stdlib.h>
+#include<stdio.h>
 
 
-HANDLE h = GetStdHandle( STD_OUTPUT_HANDLE );
+//HANDLE h = GetStdHandle( STD_OUTPUT_HANDLE );
 using namespace std;
 
 //from jojo.h
@@ -573,10 +574,10 @@ string upper_string(string str)
  }
 
 //THIS FOR CHANGE TEXT COLOR IN CONSOLE
-void changeColor(int desiredColor)
+/*void changeColor(int desiredColor)
  {
      SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), desiredColor);
- }
+ }*/
 //=====================================================================
 //============================= OLD VERSION - And it's a new duplicate checker  ================================
  bool checkduplicateName(string fname,string lname)
@@ -652,14 +653,34 @@ void ShowHasDone(int day,int month,int year,string fname,string lname,string wei
 
 
 
+bool OverWeight(string we){
+    double num;
+    num = atof(we.c_str());
+    if(num >= 700){
+        return true;
+    }else if(num < 0){
+        return true;
+    }else{
+        return false;
+    }
+}
+
+bool OverHeight(string He){
+    double num;
+    num = atof(He.c_str());
+    if(num > 275){
+        return true;
+    }else{
+        return false;
+    }
+}
 
 
 
-
-int pdata_base(char Gender[10],char Illness[20],char Firstname[10],char Lastname[10],char Day[2],char Month[2],char Year[4],char WEi[3],char Hei[4]){
+int pdata_base(char Gender[10],char Illness[20],char Firstname[10],char Lastname[10],char Day[3],char Month[3],char Year[5],char Wei[3],char Hei[4]){
 //cin.clear(); 
-string fname(Firstname),lname(Lastname);
-int day=stoi(Day), month=stoi(Month), year=stoi(Year) ;
+string fname(Firstname),lname(Lastname),d(Day),mon(Month),yea(Year);
+int day=atoi(d.c_str()), month=atoi(mon.c_str()), year=atoi(yea.c_str()) ;
 /*cout<< "\t\t\t-=========================================-"<< endl;
 cout<<"\t\t\t\t WELCOME TO REGISTER PAGE"<<endl;
 cout<< "\t\t\t-=========================================-"<<endl;
@@ -684,7 +705,7 @@ cout<<"\t\t\t Enter Your Patient Data Follow This \n"<<endl;*/
                 changeColor(12);
                 cout<<"\t\t\tYou can only input alpha here!\n";
                 changeColor(7);*/
-                return 0;
+                return 10;
             }
             /*else if(fname.empty())
             {
@@ -693,8 +714,8 @@ cout<<"\t\t\t Enter Your Patient Data Follow This \n"<<endl;*/
                 cout<<"\n\t\t\tPlease enter your patient firstname!\n";
                 changeColor(7);
             }
-        cin.clear();
-        } */
+        cin.clear();*/
+        } 
         while( ch !=1 );
     //==================================Loop FirstName End here=================================
     //THIS FOR CHECK AND GET LASTNAME !
@@ -710,7 +731,7 @@ cout<<"\t\t\t Enter Your Patient Data Follow This \n"<<endl;*/
                 /*changeColor(12);
                 cout<<"\t\t\tYou can only input alpha here!\n";
                 changeColor(7);*/
-                return 0;
+                return 10;
             }
             /*else if(lname.empty())
             {
@@ -728,7 +749,7 @@ cout<<"\t\t\t Enter Your Patient Data Follow This \n"<<endl;*/
         /*changeColor(12);
         cout<<"\t\t\tThis Patient has already Registred.\n";
         changeColor(7);*/
-        return 1;
+        return 11;
         goto RegisterHere ;
     }
     //cin.clear(); 
@@ -746,7 +767,7 @@ do  //CHECK PATIENT WEIGHT AND HEIGHT
     cin>>weight;*/
     if (OverWeight(weight))
     {
-        return 2;
+        return 12;
         chw = 0;
         /*changeColor(12);
         cout<<"\t\t\tPlease Check your patient Weight !! \n";
@@ -764,7 +785,7 @@ do  //CHECK PATIENT WEIGHT AND HEIGHT
     cin>>height;*/
     if (OverHeight(height))
     {
-        return 3;
+        return 13;
         chh = 0;/*
         changeColor(12);
         cout<<"\t\t\tPlease Check your patient Height ! \n";
@@ -792,7 +813,7 @@ do  //THIS FOR CHECK AND GET DATE OF BIRTH !
            if (day>31 or day<1)
            {
            chb = 0;
-           return 4;
+           return 14;
            /*changeColor(12);
            cout<<"\t\t\tPlease Input Day between 1-31 ! \n";
            changeColor(7);*/
@@ -803,7 +824,7 @@ do  //THIS FOR CHECK AND GET DATE OF BIRTH !
             if (day>29 or day<1)
             {
             chb = 0;
-            return 5;
+            return 15;
             /*changeColor(12);
             cout<<"\t\t\tPlease Input Day between 1-29 ! \n";
             changeColor(7);*/
@@ -815,53 +836,36 @@ do  //THIS FOR CHECK AND GET DATE OF BIRTH !
             if (day>30 or day<1)
             {
             chb = 0;
-            return 6;
+            return 16;
             /*changeColor(12);
             cout<<"\t\t\tPlease Input Day between 1-30 ! \n";
             changeColor(7);*/
             }
         }   
     }
-    else if(year<1919 or year > 2020)
+    else if(year<1919 || year > 2020)
         {
             chb = 0;
-            return 7;
+            return 17;
            /*changeColor(12);
            cout<<"\t\t\tPlease CHECK  Years ! \n";
            changeColor(7);*/
         }
-     cin.clear();     
+     //cin.clear();     
  } while( chb !=1 );
 //=======================================================================
 // all here is for check before push back 
 //ShowHasDone(day,month,year,fname,lname,weight,height);
 //======================================================
-
+}
+void writeData(char Gen[10],char Ill[20],char Firstname[10],char Lastname[10],char Day[3],char Month[3],char Year[5],char Wei[3],char Hei[4]){
 //========================================================
-ofstream write("database/userdatabase.txt",ios::out|ios::app); //Plan to delete what we just added
-write << "Name : " <<fname<< " "<< "LastName : " <<lname << "  Date of Birth: "<<day<<" / "<<month<<" / "<< year << "   height:" << height << "  Weight:" << weight << endl;
+string fname(Firstname),lname(Lastname),d(Day),mon(Month),yea(Year), weight(Wei),height(Hei),Gender(Gen),Illness(Ill);
+int day=atoi(d.c_str()), month=atoi(mon.c_str()), year=atoi(yea.c_str());
+
+ofstream write("database\\userdatabase.txt",ios::out|ios::app); //Plan to delete what we just added
+write << "Name : " <<fname<< " "<< "LastName : " <<lname << "  Date of Birth: "<<day<<" / "<<month<<" / "<< year << "   height:" << height << "  Weight:" << weight << " Gender:" << Gender << " Illness:" << Illness << endl;
 write.close();
 
 }
 
-bool OverWeight(string we){
-    double num;
-    num = stod(we);
-    if(num >= 700){
-        return true;
-    }else if(num < 0){
-        return true;
-    }else{
-        return false;
-    }
-}
-
-bool OverHeight(string He){
-    double num;
-    num = stod(we);
-    if(num > 2.75){
-        return true;
-    }else{
-        return false;
-    }
-}

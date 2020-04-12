@@ -1,9 +1,0 @@
-{
-    "files.associations": {
-        "*.rh": "cpp",
-        "list": "cpp",
-        "fstream": "cpp",
-        "xlocmes": "cpp",
-        "*.tcc": "cpp"
-    }
-}
