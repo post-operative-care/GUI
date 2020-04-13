@@ -891,8 +891,11 @@ do  //THIS FOR CHECK AND GET DATE OF BIRTH !
 //ShowHasDone(day,month,year,fname,lname,weight,height);
 //======================================================
 }
-void writeData(char Gen[10],char Ill[20],char Firstname[10],char Lastname[10],char Day[3],char Month[3],char Year[5],char Wei[3],char Hei[4]){
+void readcheck ();
+
+void writeData(char Firstname[10],char Lastname[10],char Day[3],char Month[3],char Year[5],char Hei[4],char Wei[3],char Gen[10],char Ill[20],char id_doc[10] ){
 //========================================================
+    int id=1 ;
     string fname(Firstname),lname(Lastname),d(Day),mon(Month),yea(Year), weight(Wei),height(Hei),Gender(Gen),Illness(Ill);
     int day=atoi(d.c_str()), month=atoi(mon.c_str()), year=atoi(yea.c_str());
 
@@ -906,9 +909,14 @@ void writeData(char Gen[10],char Ill[20],char Firstname[10],char Lastname[10],ch
         Sequence++;
     }
 
-    ofstream write("database\\userdatabase.txt",ios::out | ios::app); //Plan to delete what we just added
-    write << "Name : " <<fname<< " "<< "LastName : " <<lname << "  Date of Birth: "<<day<<" / "<<month<<" / "<< year << "   height:" << height << "  Weight:" << weight << " Gender:" << Gender << " Illness:" << Illness << " No." << Sequence+1 << endl;
+    string format = "database\\"+to_string(id)+"_patientlog.txt";
+    cout << format;
+    ofstream write("database\\userdatabase.txt",ios::out | ios::app); 
+    ofstream write2(format.c_str(),ios::out | ios::app);//Plan to delete what we just added
+    write << "Name : " <<fname<< " "<< "LastName : " <<lname << "  Date of Birth: "<<day<<" / "<<month<<" / "<< year << "   height:" << height << "  Weight:" << weight << " Gender:" << Gender << " Illness:" << Illness << " No." << Sequence+1 << "DoctorID :" << id_doc << endl;
+    write2 << "Name : " <<fname<< " "<< "LastName : " <<lname  << " Illness:" << Illness << endl;
     write.close();
+    write2.close();
 
 }
 
