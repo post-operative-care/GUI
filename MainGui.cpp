@@ -7,9 +7,9 @@
 #define REGISTER 4
 #define BACK_TOMENU 5
 #define DIET 6
-#define ACTIVITY 7
-#define PROHIBIT 8
-#define WOUND 9
+#define ACTIVITY 8
+#define PROHIBIT 10
+#define WOUND 12
 LRESULT CALLBACK WindowProcedure(HWND,UINT,WPARAM,LPARAM);
 
 void LoadImgLogin();
@@ -21,10 +21,15 @@ void PatientPage(HWND);
 void LoadImgPa();
 void DoctorPage(HWND);
 void LoadImgDoc();
+void LoadImgData();
 void displayFile(char*);
 HWND hTop,hUser,hPass,hReFn,hReLn,hReDay,hReMont,hReYear,hWei,hHeig,hGen,hReUsn,hRePass,hReConPass;
-HWND hSpace;//openfile but
+HWND hSpace,hEdit;//openfile Edit
 HBITMAP hLogBg,hLogin,hReBg,hSi,hBa,hPaProM,hPaBg,hPaDiet,hPaPro,hPaWou,hPaActi,hPaLogout,hDocBg,hDocPro,hDocRe;
+HBITMAP hDa,hDc,hDe,hDg,hDh,hDhr,hDs;//DIET
+HBITMAP hAa,hAc,hAe,hAg,hAh,hAhr,hAs;//ACTIVITY
+HBITMAP hPa,hPc,hPe,hPg,hPh,hPhr,hPs;//PROHIBIT
+HBITMAP hWa,hWc,hWe,hWg,hWh,hWhr,hWs;//WOUND
 HFONT hFont;
 char type,user[20],Illness[20];
 string opLogin,gender;
@@ -77,6 +82,11 @@ LRESULT CALLBACK WindowProcedure(HWND hWnd,UINT msg,WPARAM wp,LPARAM lp){
                             id=find_Sequence(username);
                             LoadImgDoc();     
                             DoctorPage(hWnd);
+                            /*string spath = "database\\"+to_string(id)+"_patientlog.txt";
+                            char path[25];
+                            strcpy(path,spath.c_str());
+                            hEdit = CreateWindowW(L"Edit",L"",WS_VISIBLE | WS_CHILD | ES_MULTILINE | WS_VSCROLL | WS_HSCROLL |  ES_READONLY,450,87,731,565,hWnd,NULL,NULL,NULL);
+                            displayFile(path);*/
                         }else if(type == 'P'){
                             EnumChildWindows(hWnd,DestoryChildCallback, NULL);
                             id=find_Sequence(username);
@@ -129,6 +139,11 @@ LRESULT CALLBACK WindowProcedure(HWND hWnd,UINT msg,WPARAM wp,LPARAM lp){
                             EnumChildWindows(hWnd,DestoryChildCallback, NULL);
                             LoadImgDoc();     
                             DoctorPage(hWnd);
+                            /*string spath = "database\\"+to_string(id)+"_patientlog.txt";
+                            char path[25];
+                            strcpy(path,spath.c_str());
+                            hEdit = CreateWindowW(L"Edit",L"",WS_VISIBLE | WS_CHILD | ES_MULTILINE | WS_VSCROLL | WS_HSCROLL |  ES_READONLY,450,87,731,565,hWnd,NULL,NULL,NULL);
+                            displayFile(path);*/
                         }
                     }
                     
@@ -149,94 +164,115 @@ LRESULT CALLBACK WindowProcedure(HWND hWnd,UINT msg,WPARAM wp,LPARAM lp){
                     DoctorPage(hWnd);
                     break;
                 
-                // case DIET:   
-                
-                
-                //     if(strcmp(Illness,"Abdominal") == 0){
-                //         MessageBoxW(hWnd,L"No Data Found",L"Sorry",MB_OK);
-                // //     }else if(strcmp(Illness,"Cesarean") == 0){
-                // //         char directory[] = "database\\postoperative_data\\cesarean\\diet.txt";
-                // //         displayFile(directory,hSpace);
-                // //     }else if(strcmp(Illness,"Eye") == 0){
-                // //         MessageBoxW(hWnd,L"No Data Found",L"Sorry",MB_OK);
-                // //     }else if(strcmp(Illness,"Eye") == 0){
-                // //        char directory[] = "database\\postoperative_data\\gynecologic\\diet.txt";
-                // //         displayFile(directory,hSpace);
-                // //     }else if(strcmp(Illness,"Hernia") == 0){
-                // //         MessageBoxW(hWnd,L"No Data Found",L"Sorry",MB_OK);
-                // //     }else if(strcmp(Illness,"Hip Replacement") == 0){
-                // //         char directory[] = "database\\postoperative_data\\hip replacement\\diet.txt";
-                // //         displayFile(directory,hSpace);
-                // //     }else if(strcmp(Illness,"Spine") == 0){
-                // //         MessageBoxW(hWnd,L"Data Not Found !",L"Sorry",MB_OK);
-                //     }
+                case DIET:
+                    LoadImgData();   
+                    if(strcmp(Illness,"Abdominal") == 0){
+                        MessageBoxW(hWnd,L"No Data Found",L"Sorry",MB_OK);
+                    }else if(strcmp(Illness,"Cesarean") == 0){
+                        readcheck(id,4);
+                        hSpace = CreateWindowW(L"static",L"",WS_VISIBLE | WS_CHILD | SS_BITMAP,344,287,842,363,hWnd,NULL,NULL,NULL);
+                        SendMessageW(hSpace,STM_SETIMAGE,IMAGE_BITMAP,(LPARAM)hDc);
+                    }else if(strcmp(Illness,"Eye") == 0){
+                        MessageBoxW(hWnd,L"No Data Found",L"Sorry",MB_OK);
+                    }else if(strcmp(Illness,"Gynecologic") == 0){
+                        readcheck(id,4);
+                        hSpace = CreateWindowW(L"static",L"",WS_VISIBLE | WS_CHILD | SS_BITMAP,344,287,842,363,hWnd,NULL,NULL,NULL);
+                        SendMessageW(hSpace,STM_SETIMAGE,IMAGE_BITMAP,(LPARAM)hDc);
+                    }else if(strcmp(Illness,"Hernia") == 0){
+                        MessageBoxW(hWnd,L"No Data Found",L"Sorry",MB_OK);
+                    }else if(strcmp(Illness,"Hip Replacement") == 0){
+                        readcheck(id,4);
+                        hSpace = CreateWindowW(L"static",L"",WS_VISIBLE | WS_CHILD | SS_BITMAP,344,287,842,363,hWnd,NULL,NULL,NULL);
+                        SendMessageW(hSpace,STM_SETIMAGE,IMAGE_BITMAP,(LPARAM)hDc);
+                    }else if(strcmp(Illness,"Spine") == 0){
+                        MessageBoxW(hWnd,L"Data Not Found !",L"Sorry",MB_OK);
+                    }
                     
-                //      break;
-                // case ACTIVITY:
-                //     if(strcmp(Illness,"Abdominal") == 0){
-                //        char directory[70] = "database/postoperative_data/abdominal/activity.txt";
-                //         displayFile(directory);
-                // //     }else if(strcmp(Illness,"Cesarean") == 0){
-                // //         char directory[] = "database\\postoperative_data\\cesarean\\activity.txt";
-                // //         displayFile(directory,hSpace);
-                // //     }else if(strcmp(Illness,"Eye") ==0 ){
-                // //         char directory[] = "database\\postoperative_data\\eye\\activity.txt";
-                // //         displayFile(directory,hSpace);
-                // //     }else if(strcmp(Illness,"Gynecologic") == 0) {
-                // //         char directory[] = "database\\postoperative_data\\gynecologic\\activity.txt";                        
-                // //         displayFile(directory,hSpace);
-                // //     }else if(strcmp(Illness,"Hernia") == 0){
-                // //         char directory[] = "database\\postoperative_data\\hernia\\activity.txt";                        
-                // //         displayFile(directory,hSpace);
-                // //     }else if(strcmp(Illness,"Hip Replacement") == 0){
-                // //         char directory[] = "database\\postoperative_data\\hip replacement\\activity.txt";
-                // //         displayFile(directory,hSpace);
-                // //     }else{
-                // //         char directory[] = "database\\postoperative_data\\spine\\activity.txt";
-                // //         displayFile(directory,hSpace);
-                //      }
-                //     break;
-                //  case PROHIBIT:
-                  
-                //     if(strcmp(Illness,"Abdominal") == 0){
-                //         MessageBoxW(hWnd,L"No Data Found",L"Sorry",MB_OK);
-                // //     }else if(strcmp(Illness,"Cesarean") == 0){
-                // //         char directory[] = "database\\postoperative_data\\cesarean\\prohibition.txt";
-                // //         displayFile(directory,hSpace);
-                // //     }else if(strcmp(Illness,"Eye") ==0 ){
-                // //         MessageBoxW(hWnd,L"No Data Found",L"Sorry",MB_OK);
-                // //     }else if(strcmp(Illness,"Eye") == 0){
-                // //        char directory[] = "database\\postoperative_data\\gynecologic\\prohibition.txt";
-                // //         displayFile(directory,hSpace);
-                // //     }else if(strcmp(Illness,"Hernia") == 0){
-                // //         MessageBoxW(hWnd,L"No Data Found",L"Sorry",MB_OK);
-                // //     }else if(strcmp(Illness,"Hip Replacement") == 0){
-                // //         char directory[] = "database\\postoperative_data\\hip replacement\\prohibition.txt";
-                // //         displayFile(directory,hSpace);
-                // //     }else if(strcmp(Illness,"Spine") == 0){
-                // //         MessageBoxW(hWnd,L"Data Not Found !",L"Sorry",MB_OK);
-                //     }
-                //      break;
-                //  case WOUND:
-                //     if(strcmp(Illness,"Abdominal") == 0){
-                //         char directory[70] = "database/postoperative_data/abdominal/wound.txt";
-                //         displayFile(directory);
-                // //     }else if(strcmp(Illness,"Cesarean") == 0){
-                // //         MessageBoxW(hWnd,L"No Data Found",L"Sorry",MB_OK);
-                // //     }else if(strcmp(Illness,"Eye") == 0){
-                // //         MessageBoxW(hWnd,L"No Data Found",L"Sorry",MB_OK);
-                // //     }else if(strcmp(Illness,"Gynecologic") == 0){
-                // //         MessageBoxW(hWnd,L"No Data Found",L"Sorry",MB_OK);
-                // //     }else if(strcmp(Illness,"Hernia") == 0){
-                // //         char directory[] = "database\\postoperative_data\\hernia\\wound.txt";
-                // //         displayFile(directory,hSpace);
-                // //     }else if(strcmp(Illness,"Hip Replacement") == 0){
-                // //         char directory[] = "database\\postoperative_data\\Hip Replacement\\wound.txt";
-                // //         displayFile(directory,hSpace);
-                // //     }else if(strcmp(Illness,"Spine") == 0){
-                // //         MessageBoxW(hWnd,L"Data Not Found !",L"Sorry",MB_OK);
-                //      }
-                //     break;
+                     break;
+                case ACTIVITY://1
+                    LoadImgData();
+                    if(strcmp(Illness,"Abdominal") == 0){
+                        readcheck(id,1);
+                        hSpace = CreateWindowW(L"static",L"",WS_VISIBLE | WS_CHILD | SS_BITMAP,344,287,842,363,hWnd,NULL,NULL,NULL);
+                        SendMessageW(hSpace,STM_SETIMAGE,IMAGE_BITMAP,(LPARAM)hAc);
+                    }else if(strcmp(Illness,"Cesarean") == 0){
+                        readcheck(id,1);
+                        hSpace = CreateWindowW(L"static",L"",WS_VISIBLE | WS_CHILD | SS_BITMAP,344,287,842,363,hWnd,NULL,NULL,NULL);
+                        SendMessageW(hSpace,STM_SETIMAGE,IMAGE_BITMAP,(LPARAM)hAc);
+                    }else if(strcmp(Illness,"Eye") ==0 ){
+                        readcheck(id,1);
+                        hSpace = CreateWindowW(L"static",L"",WS_VISIBLE | WS_CHILD | SS_BITMAP,344,287,842,363,hWnd,NULL,NULL,NULL);
+                        SendMessageW(hSpace,STM_SETIMAGE,IMAGE_BITMAP,(LPARAM)hAe);
+                    }else if(strcmp(Illness,"Gynecologic") == 0) {
+                        readcheck(id,1);
+                        hSpace = CreateWindowW(L"static",L"",WS_VISIBLE | WS_CHILD | SS_BITMAP,344,287,842,363,hWnd,NULL,NULL,NULL);
+                        SendMessageW(hSpace,STM_SETIMAGE,IMAGE_BITMAP,(LPARAM)hAg);
+                    }else if(strcmp(Illness,"Hernia") == 0){
+                        readcheck(id,1);
+                        hSpace = CreateWindowW(L"static",L"",WS_VISIBLE | WS_CHILD | SS_BITMAP,344,287,842,363,hWnd,NULL,NULL,NULL);
+                        SendMessageW(hSpace,STM_SETIMAGE,IMAGE_BITMAP,(LPARAM)hAh);
+                    }else if(strcmp(Illness,"Hip Replacement") == 0){
+                        readcheck(id,1);
+                        hSpace = CreateWindowW(L"static",L"",WS_VISIBLE | WS_CHILD | SS_BITMAP,344,287,842,363,hWnd,NULL,NULL,NULL);
+                        SendMessageW(hSpace,STM_SETIMAGE,IMAGE_BITMAP,(LPARAM)hAhr);
+                    }else{
+                        readcheck(id,1);
+                        hSpace = CreateWindowW(L"static",L"",WS_VISIBLE | WS_CHILD | SS_BITMAP,344,287,842,363,hWnd,NULL,NULL,NULL);
+                        SendMessageW(hSpace,STM_SETIMAGE,IMAGE_BITMAP,(LPARAM)hAs);
+                     }
+                    break;
+                 case PROHIBIT://3
+                    LoadImgData();
+                    if(strcmp(Illness,"Abdominal") == 0){
+                        readcheck(id,3);
+                        hSpace = CreateWindowW(L"static",L"",WS_VISIBLE | WS_CHILD | SS_BITMAP,344,287,842,363,hWnd,NULL,NULL,NULL);
+                        SendMessageW(hSpace,STM_SETIMAGE,IMAGE_BITMAP,(LPARAM)hPa);
+                    }else if(strcmp(Illness,"Cesarean") == 0){
+                        MessageBoxW(hWnd,L"No Data Found",L"Sorry",MB_OK);
+                    }else if(strcmp(Illness,"Eye") == 0){
+                        readcheck(id,3);
+                        hSpace = CreateWindowW(L"static",L"",WS_VISIBLE | WS_CHILD | SS_BITMAP,344,287,842,363,hWnd,NULL,NULL,NULL);
+                        SendMessageW(hSpace,STM_SETIMAGE,IMAGE_BITMAP,(LPARAM)hPe);
+                    }else if(strcmp(Illness,"Gynecologic") == 0){
+                        readcheck(id,3);
+                        hSpace = CreateWindowW(L"static",L"",WS_VISIBLE | WS_CHILD | SS_BITMAP,344,287,842,363,hWnd,NULL,NULL,NULL);
+                        SendMessageW(hSpace,STM_SETIMAGE,IMAGE_BITMAP,(LPARAM)hPg);
+                    }else if(strcmp(Illness,"Hernia") == 0){
+                        readcheck(id,3);
+                        hSpace = CreateWindowW(L"static",L"",WS_VISIBLE | WS_CHILD | SS_BITMAP,344,287,842,363,hWnd,NULL,NULL,NULL);
+                        SendMessageW(hSpace,STM_SETIMAGE,IMAGE_BITMAP,(LPARAM)hPh);
+                    }else if(strcmp(Illness,"Hip Replacement") == 0){
+                        readcheck(id,3);
+                        hSpace = CreateWindowW(L"static",L"",WS_VISIBLE | WS_CHILD | SS_BITMAP,344,287,842,363,hWnd,NULL,NULL,NULL);
+                        SendMessageW(hSpace,STM_SETIMAGE,IMAGE_BITMAP,(LPARAM)hPhr);
+                    }else if(strcmp(Illness,"Spine") == 0){
+                        readcheck(id,3);
+                        hSpace = CreateWindowW(L"static",L"",WS_VISIBLE | WS_CHILD | SS_BITMAP,344,287,842,363,hWnd,NULL,NULL,NULL);
+                        SendMessageW(hSpace,STM_SETIMAGE,IMAGE_BITMAP,(LPARAM)hPs);
+                    }
+                     break;
+                 case WOUND://2
+                    LoadImgData();
+                    if(strcmp(Illness,"Abdominal") == 0){
+                        readcheck(id,2);
+                        hSpace = CreateWindowW(L"static",L"",WS_VISIBLE | WS_CHILD | SS_BITMAP,344,287,842,363,hWnd,NULL,NULL,NULL);
+                        SendMessageW(hSpace,STM_SETIMAGE,IMAGE_BITMAP,(LPARAM)hWa);
+                    }else if(strcmp(Illness,"Cesarean") == 0){
+                        MessageBoxW(hWnd,L"No Data Found",L"Sorry",MB_OK);
+                    }else if(strcmp(Illness,"Eye") == 0){
+                        MessageBoxW(hWnd,L"No Data Found",L"Sorry",MB_OK);
+                    }else if(strcmp(Illness,"Gynecologic") == 0){
+                        MessageBoxW(hWnd,L"No Data Found",L"Sorry",MB_OK);
+                    }else if(strcmp(Illness,"Hernia") == 0){
+                        readcheck(id,3);
+                        hSpace = CreateWindowW(L"static",L"",WS_VISIBLE | WS_CHILD | SS_BITMAP,344,287,842,363,hWnd,NULL,NULL,NULL);
+                        SendMessageW(hSpace,STM_SETIMAGE,IMAGE_BITMAP,(LPARAM)hWh);
+                    }else if(strcmp(Illness,"Hip Replacement") == 0){
+                        MessageBoxW(hWnd,L"No Data Found",L"Sorry",MB_OK);
+                    }else if(strcmp(Illness,"Spine") == 0){
+                        MessageBoxW(hWnd,L"Data Not Found !",L"Sorry",MB_OK);
+                     }
+                    break;
             }
             break;       
         case WM_CREATE:
@@ -381,9 +417,6 @@ void PatientPage(HWND hWnd){
     HWND hPaWeight = CreateWindowW(L"Static",L"",WS_VISIBLE | WS_CHILD | ES_READONLY,808,195,35,15,hWnd,NULL,NULL,NULL);//weight
     SetWindowText(hPaWeight,Weight);
 
-
-    hSpace = CreateWindowW(L"Edit",L"",WS_VISIBLE | WS_CHILD | ES_MULTILINE | WS_VSCROLL | WS_HSCROLL |  ES_READONLY,344,287,842,363,hWnd,NULL,NULL,NULL);
-
     HWND hLogout = CreateWindowW(L"Button",NULL,WS_VISIBLE | WS_CHILD | BS_BITMAP,408,193,70,20,hWnd,(HMENU)LOG_OUT,NULL,NULL);
     SendMessageW(hLogout,BM_SETIMAGE,IMAGE_BITMAP,(LPARAM)hPaLogout);
 }
@@ -433,8 +466,8 @@ void DoctorPage(HWND hWnd){
 
     HWND DrName = CreateWindowW(L"Static",NULL,WS_VISIBLE | WS_CHILD | SS_CENTER,126,381,250,20,hWnd,NULL,NULL,NULL);
     SetWindowText(DrName,Fullname);
-
-    HWND hEdit = CreateWindowW(L"Edit",L"",WS_VISIBLE | WS_CHILD | ES_MULTILINE | WS_VSCROLL | WS_HSCROLL |  ES_READONLY,450,87,731,565,hWnd,NULL,NULL,NULL);
+    
+    
 }
 
 void LoadImgDoc(){
@@ -454,7 +487,41 @@ void LoadImgDoc(){
     
 
 }
- 
+ void LoadImgData(){
+
+     //////////DIET//////////////////
+     hDg = (HBITMAP)LoadImageW(NULL,L"database\\postoperative_data\\abdominal\\diet.bmp",IMAGE_BITMAP,0,0,LR_LOADFROMFILE);
+     hDc = (HBITMAP)LoadImageW(NULL,L"database\\postoperative_data\\cesarean\\cesarean_diet.bmp",IMAGE_BITMAP,0,0,LR_LOADFROMFILE);
+     hDhr = (HBITMAP)LoadImageW(NULL,L"database\\postoperative_data\\hip Replacement\\diet.bmp",IMAGE_BITMAP,0,0,LR_LOADFROMFILE);
+     //////////DIET//////////////////
+
+     /////////ACTIVITY///////////////
+     hAa = (HBITMAP)LoadImageW(NULL,L"database\\postoperative_data\\abdominal\\activity.bmp",IMAGE_BITMAP,0,0,LR_LOADFROMFILE);
+     hAc = (HBITMAP)LoadImageW(NULL,L"database\\postoperative_data\\cesarean\\cesarean_acti.bmp",IMAGE_BITMAP,0,0,LR_LOADFROMFILE);
+     hAe = (HBITMAP)LoadImageW(NULL,L"database\\postoperative_data\\eye\\eye_acti.bmp",IMAGE_BITMAP,0,0,LR_LOADFROMFILE);
+     hAg = (HBITMAP)LoadImageW(NULL,L"database\\postoperative_data\\gynecologic\\activity.bmp",IMAGE_BITMAP,0,0,LR_LOADFROMFILE);
+     hAh = (HBITMAP)LoadImageW(NULL,L"database\\postoperative_data\\hernia\\hernia_acti.bmp",IMAGE_BITMAP,0,0,LR_LOADFROMFILE);
+     hAhr = (HBITMAP)LoadImageW(NULL,L"database\\postoperative_data\\hip Replacement\\activity.bmp",IMAGE_BITMAP,0,0,LR_LOADFROMFILE);
+     hAs = (HBITMAP)LoadImageW(NULL,L"database\\postoperative_data\\spine\\activity.bmp",IMAGE_BITMAP,0,0,LR_LOADFROMFILE);
+     /////////ACTIVITY///////////////
+
+     ////////PROHIBIT////////////////
+     hPa = (HBITMAP)LoadImageW(NULL,L"database\\postoperative_data\\abdominal\\prohibition.bmp",IMAGE_BITMAP,0,0,LR_LOADFROMFILE);
+     hPe = (HBITMAP)LoadImageW(NULL,L"database\\postoperative_data\\eye\\eye_proh.bmp",IMAGE_BITMAP,0,0,LR_LOADFROMFILE);
+     hPg = (HBITMAP)LoadImageW(NULL,L"database\\postoperative_data\\gynecologic\\prohibit.bmp",IMAGE_BITMAP,0,0,LR_LOADFROMFILE);
+     hPh = (HBITMAP)LoadImageW(NULL,L"database\\postoperative_data\\hernia\\hernia_proh.bmp",IMAGE_BITMAP,0,0,LR_LOADFROMFILE);
+     hPhr = (HBITMAP)LoadImageW(NULL,L"database\\postoperative_data\\hip Replacement\\prohibit.bmp",IMAGE_BITMAP,0,0,LR_LOADFROMFILE);
+     hPs = (HBITMAP)LoadImageW(NULL,L"database\\postoperative_data\\spine\\prohibit.bmp",IMAGE_BITMAP,0,0,LR_LOADFROMFILE);
+     ////////PROHIBIT////////////////
+
+     ///////////WOUND///////////////
+     hWa = (HBITMAP)LoadImageW(NULL,L"database\\postoperative_data\\abdominal\\woundcare.bmp",IMAGE_BITMAP,0,0,LR_LOADFROMFILE);
+     hWh = (HBITMAP)LoadImageW(NULL,L"database\\postoperative_data\\hernia\\hernia_wound.bmp",IMAGE_BITMAP,0,0,LR_LOADFROMFILE);
+     ///////////WOUND///////////////
+
+     
+
+ }
 void displayFile(char *path){
 	FILE *file;
 	file = fopen(path,"rb");
@@ -465,5 +532,5 @@ void displayFile(char *path){
 	fread(data,_size,1,file);
 	data[_size] = '\0';
 	
-	SetWindowText(hSpace,data);
+	SetWindowText(hEdit,data);
 }

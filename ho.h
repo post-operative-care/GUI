@@ -1094,13 +1094,12 @@ void readcheck (int id_pt,int num_botton)
         sscanf(textline.c_str(),fomat,&name,&lastname,&date,&month,&year,&height,&weight,&gender,&illness,&number,&doc_id);
         if (id_pt == stoi(number))
         {
-            break;
+            break; // for find doc_id
         }
         
     }
     file_input.close();
-
-
+                                    //usd doc id to access file
     string formatout = "database\\"+to_string(doc_id)+"_patientlog.txt";
     ifstream main_input(formatout.c_str());
     ofstream temp_out("database/temp.txt");
@@ -1115,17 +1114,26 @@ void readcheck (int id_pt,int num_botton)
     temp_out.close();
     main_input.close();
 
-    ifstream status(formatout.c_str());
+    ifstream status("database\\temp.txt");
 
     char my_name[30],my_Lname[30],my_ill[30];
     char format_status[] = "Name : %s LastName : %s  Illness : %s | A : %s W : %s P : %s D : %s";
-    string findstatus;
+    string findstatus,str_name = name,str_myname,str_lastname = lastname,str_mylname;
     char status_1[5],status_2[5],status_3[5],status_4[5];
     while (getline(status,findstatus))
     {
+
         sscanf(findstatus.c_str(),format_status,&my_name,&my_Lname,&my_ill,status_1,&status_2,&status_3,&status_4);
+        str_myname = my_name;
+        str_mylname = my_Lname;
+        if (str_name == str_myname)
+        {
+            cout << 1;
+            //cout << my_name << my_Lname << my_ill << status_1 << status_2 << status_3 << status_4 << endl;
+            break;
+        }
         //cout << status_1;
-        //cout << my_name << my_Lname << my_ill << status_1 << status_2 << status_3 << status_4;
+        
     }
 
     status.close();
@@ -1149,14 +1157,20 @@ void readcheck (int id_pt,int num_botton)
     
     
     while (getline(temp_in,from_temp))
-    {                                  // Activity / Wound care / Prohibition / Diet care //                 
-        if (my_name == name)
+    {      
+                                    // Activity / Wound care / Prohibition / Diet care //  
+        sscanf(from_temp.c_str(),format_status,&my_name,&my_Lname,&my_ill,status_1,&status_2,&status_3,&status_4);  
+        str_myname = my_name;
+        str_mylname = my_Lname;       
+       //cout << str_myname  << str_name <<endl;
+        if (str_myname == str_name && str_mylname == str_lastname)
         {
+            cout << 2;
             main_output << "Name : " << my_name <<" "<< "LastName : " << my_Lname << "  Illness : " << my_ill << " | A : " << statusA << " W : " << statusW << " P : " << statusP << " D : " << statusD << endl;
         }
         else
         {
-            /* code */
+            main_output << from_temp << endl;
         }
         
         
@@ -1164,6 +1178,6 @@ void readcheck (int id_pt,int num_botton)
     temp_in.close();
     main_output.close();
    
-   remove("database/temp.txt");
+   //remove("database/temp.txt");
     
 }
