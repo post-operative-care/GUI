@@ -355,7 +355,34 @@ bool checkduplicateID(string ID)
 
         if (cerent_name == ID)
         {
-            cout << "This username is already taken." << endl;
+            //cout << "This username is already taken." << endl;
+            return true;
+        }
+        
+
+        
+    } 
+    file_in.close(); 
+    return false;
+}
+bool check(char ID[1])
+/* this function used to detect input on username that user gave
+ not in used in database */
+{
+    char cerent_name[100];
+    ifstream file_in("database/user_data.txt");
+    string textline;
+    
+    while (getline(file_in,textline))
+    {
+        //testcase
+        //cout << "textline = " << textline << endl;
+        sscanf(textline.c_str(),"ID = %s ",&cerent_name);
+        //cout << cerent_name << endl;
+
+        if (cerent_name == ID)
+        {
+            //cout << "This username is already taken." << endl;
             return true;
         }
         
@@ -1123,7 +1150,16 @@ void readcheck (int id_pt,int num_botton)
     
     while (getline(temp_in,from_temp))
     {                                  // Activity / Wound care / Prohibition / Diet care //                 
-        main_output << "Name : " << my_name <<" "<< "LastName : " << my_Lname << "  Illness : " << my_ill << " | A : " << statusA << " W : " << statusW << " P : " << statusP << " D : " << statusD << endl;
+        if (my_name == name)
+        {
+            main_output << "Name : " << my_name <<" "<< "LastName : " << my_Lname << "  Illness : " << my_ill << " | A : " << statusA << " W : " << statusW << " P : " << statusP << " D : " << statusD << endl;
+        }
+        else
+        {
+            /* code */
+        }
+        
+        
     }
     temp_in.close();
     main_output.close();

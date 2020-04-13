@@ -2,3 +2,4 @@ Name : Phirachat LastName : Kochanil  Date of Birth: 10 / 12 / 2001   height:172
 Name : zxc LastName : zxc  Date of Birth: 7 / 6 / 2002   height:123  Weight:25 Gender:Man Illness:NULL No.2 DoctorID :1
 Name : name_test LastName : lname_test  Date of Birth: 7 / 6 / 2002   height:123  Weight:25 Gender:Man Illness:Eye No.3 DoctorID :1
 Name : phird LastName : yo  Date of Birth: 4 / 11 / 2000   height:180  Weight:80 Gender:Man Illness:Abdominal No.4 DoctorID :2
+Name : wis LastName : wis  Date of Birth: 4 / 11 / 2000   height:180  Weight:80 Gender:Man Illness:Abdominal No.5 DoctorID :1
