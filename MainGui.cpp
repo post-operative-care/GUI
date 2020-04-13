@@ -82,11 +82,11 @@ LRESULT CALLBACK WindowProcedure(HWND hWnd,UINT msg,WPARAM wp,LPARAM lp){
                             id=find_Sequence(username);
                             LoadImgDoc();     
                             DoctorPage(hWnd);
-                            /*string spath = "database\\"+to_string(id)+"_patientlog.txt";
+                            string spath = "database\\"+to_string(id)+"_patientlog.txt";
                             char path[25];
                             strcpy(path,spath.c_str());
                             hEdit = CreateWindowW(L"Edit",L"",WS_VISIBLE | WS_CHILD | ES_MULTILINE | WS_VSCROLL | WS_HSCROLL |  ES_READONLY,450,87,731,565,hWnd,NULL,NULL,NULL);
-                            displayFile(path);*/
+                            displayFile(path);
                         }else if(type == 'P'){
                             EnumChildWindows(hWnd,DestoryChildCallback, NULL);
                             id=find_Sequence(username);
@@ -139,11 +139,6 @@ LRESULT CALLBACK WindowProcedure(HWND hWnd,UINT msg,WPARAM wp,LPARAM lp){
                             EnumChildWindows(hWnd,DestoryChildCallback, NULL);
                             LoadImgDoc();     
                             DoctorPage(hWnd);
-                            /*string spath = "database\\"+to_string(id)+"_patientlog.txt";
-                            char path[25];
-                            strcpy(path,spath.c_str());
-                            hEdit = CreateWindowW(L"Edit",L"",WS_VISIBLE | WS_CHILD | ES_MULTILINE | WS_VSCROLL | WS_HSCROLL |  ES_READONLY,450,87,731,565,hWnd,NULL,NULL,NULL);
-                            displayFile(path);*/
                         }
                     }
                     
@@ -381,7 +376,7 @@ void PatientPage(HWND hWnd){
     HWND hActbut = CreateWindowW(L"Button",NULL,WS_VISIBLE | WS_CHILD | BS_BITMAP,91,467,200,30,hWnd,(HMENU)ACTIVITY,NULL,NULL); //button for Activity menu
     SendMessageW(hActbut,BM_SETIMAGE,IMAGE_BITMAP,(LPARAM)hPaActi);
     string sfname,slname,sAge,sWeight,sHeight,sDate,sIllness;
-    char fname[20],lname[20],Age[3],Weight[4],Height[4],Date[10],Fullname[50];  
+    char fname[20],lname[20],Age[3],Weight[4],Height[4],Date[10],Fullname[50]={};  
     sfname = SDataDB(id,'N');
     slname = SDataDB(id,'L');
     sDate = SDataDB(id,'D');
@@ -490,7 +485,7 @@ void LoadImgDoc(){
  void LoadImgData(){
 
      //////////DIET//////////////////
-     hDg = (HBITMAP)LoadImageW(NULL,L"database\\postoperative_data\\abdominal\\diet.bmp",IMAGE_BITMAP,0,0,LR_LOADFROMFILE);
+     hDg = (HBITMAP)LoadImageW(NULL,L"database\\postoperative_data\\gynecologic\\diet.bmp",IMAGE_BITMAP,0,0,LR_LOADFROMFILE);
      hDc = (HBITMAP)LoadImageW(NULL,L"database\\postoperative_data\\cesarean\\cesarean_diet.bmp",IMAGE_BITMAP,0,0,LR_LOADFROMFILE);
      hDhr = (HBITMAP)LoadImageW(NULL,L"database\\postoperative_data\\hip Replacement\\diet.bmp",IMAGE_BITMAP,0,0,LR_LOADFROMFILE);
      //////////DIET//////////////////

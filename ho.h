@@ -12,6 +12,7 @@
 #include<ctime>
 
 
+
 //HANDLE h = GetStdHandle( STD_OUTPUT_HANDLE );
 using namespace std;
 
@@ -508,6 +509,8 @@ bool register_page(char user[20],char pass[20],char conpass[20])
         file_in.close();
         file_out << "ID = " << VecID[0] << " PASSWORD : " << VecPASS[0] << " | TYPE : P No." << Sequence+1 <<  endl;
         file_out.close();
+        VecID.clear();
+        VecPASS.clear();
         return true;
     }
 }
@@ -1128,7 +1131,7 @@ void readcheck (int id_pt,int num_botton)
         str_mylname = my_Lname;
         if (str_name == str_myname)
         {
-            cout << 1;
+            //cout << 1;
             //cout << my_name << my_Lname << my_ill << status_1 << status_2 << status_3 << status_4 << endl;
             break;
         }
@@ -1165,7 +1168,7 @@ void readcheck (int id_pt,int num_botton)
        //cout << str_myname  << str_name <<endl;
         if (str_myname == str_name && str_mylname == str_lastname)
         {
-            cout << 2;
+            //cout << 2;
             main_output << "Name : " << my_name <<" "<< "LastName : " << my_Lname << "  Illness : " << my_ill << " | A : " << statusA << " W : " << statusW << " P : " << statusP << " D : " << statusD << endl;
         }
         else
@@ -1178,6 +1181,6 @@ void readcheck (int id_pt,int num_botton)
     temp_in.close();
     main_output.close();
    
-   //remove("database/temp.txt");
+   remove("database/temp.txt");
     
 }

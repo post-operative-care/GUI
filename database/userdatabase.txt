@@ -1,5 +1,6 @@
-Name : Phirachat LastName : Kochanil  Date of Birth: 10 / 12 / 2001   height:172  Weight:70 Gender:Man Illness:NULL No.1 DoctorID :1
-Name : zxc LastName : zxc  Date of Birth: 7 / 6 / 2002   height:123  Weight:25 Gender:Man Illness:NULL No.2 DoctorID :1
-Name : name_test LastName : lname_test  Date of Birth: 7 / 6 / 2002   height:123  Weight:25 Gender:Man Illness:Eye No.3 DoctorID :1
-Name : phird LastName : yo  Date of Birth: 4 / 11 / 2000   height:180  Weight:80 Gender:Man Illness:Abdominal No.4 DoctorID :2
-Name : mek LastName : wis  Date of Birth: 4 / 11 / 2000   height:180  Weight:80 Gender:Man Illness:Abdominal No.5 DoctorID :1
+Name : Phirachat LastName : Kochanil  Date of Birth: 10 / 12 / 2001   height:172  Weight:70 Gender:Man Illness:NULL No.1 DoctorID :NULL
+Name : zxc LastName : zxc  Date of Birth: 7 / 6 / 2002   height:123  Weight:25 Gender:Man Illness:NULL No.2 DoctorID :NULL
+Name : yoyo LastName : wisaroy  Date of Birth: 14 / 4 / 2013   height:165  Weight:65 Gender:Man Illness:Cesarean No.3 DoctorID :1
+Name : wwwww LastName : sssss  Date of Birth: 1 / 12 / 2019   height:65  Weight:11 Gender:Woman Illness:Eye No.4 DoctorID :1
+Name : sss LastName : ssss  Date of Birth: 1 / 1 / 2001   height:175  Weight:65 Gender:Man Illness:Glynecologic No.5 DoctorID :1
+Name : xxxxxz LastName : zzzz  Date of Birth: 12 / 12 / 2000   height:154  Weight:15 Gender:Man Illness:Abdominal No.6 DoctorID :2

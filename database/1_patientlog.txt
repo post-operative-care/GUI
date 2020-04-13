@@ -1,2 +1,3 @@
-Name : name_test LastName : lname_test  Illness : Eye | A : NULL W : NULL P : NULL D : NULL
-Name : mek LastName : wis  Illness : Abdominal | A : NULL W : NULL P : NULL D : NULL
+Name : yoyo LastName : wisaroy  Illness : Cesarean | A : READ W : NULL P : NULL D : READ
+Name : wwwww LastName : sssss  Illness : Eye | A : READ W : NULL P : READ D : NULL
+Name : sss LastName : ssss  Illness : Glynecologic | A : READ W : NULL P : NULL D : NULL
