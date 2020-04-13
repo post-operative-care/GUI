@@ -5,7 +5,6 @@
 #include<string>
 #include<cstdlib>
 #include<cstring>
-//#include<windows.h>
 #include<cstdio>
 #include<conio.h>
 #include <stdlib.h>
@@ -146,15 +145,64 @@ char Select_case(int num_case){
     }
     
     data1.open(local.c_str());
-    string textline;
+    string textline,text_read;
+    
 
-    while(getline(data1,textline)){
-        cout << textline << endl;
+    char select;
+    string skeyword,ekeyword;
+    do{
+        cout << "select data :" ;
+        cin >> select;
+        if(select == 'A' || select == 'a' )
+        {
+        skeyword = "!";
+        ekeyword = "@";
+        break;
+        }
+        else if(select == 'W' ||select == 'w' )
+        {
+        skeyword = "#";
+        ekeyword = "$";
+        break;
+        }
+        else if(select == 'D' ||select == 'd' )
+        {
+        skeyword = "%";
+        ekeyword = "^";
+        break;
+        }
+        else if(select == 'P' ||select == 'p' ){
+        skeyword = "&";
+        ekeyword = "*";
+        break;
+        }
+        else
+        {
+        cout << "You entered incorrectly. Please enter again." << "\n";
     }
+    }while(select != 'A' || select != 'a' || select != 'D' ||select != 'd' || select != 'W' || select != 'W' || select != 'P' ||select != 'p'  );
+    
+    int start,end,count=0;
+    while(getline(data1,textline)){    
+        int start = textline.find_first_of(skeyword);
+        int end = textline.find_first_of(ekeyword);
+        if(start==-1&&end==-1&&count==0){
+            continue;
+        }else if(start!=-1){
+            cout << textline.substr(1,textline.size()) << "\n";
+            count = 1;
+        }else if(end==-1&&count==1) {
+            cout << textline << "\n";
+        }else{
+            cout << textline.substr(0,textline.size()-1) << "\n";
+            break;
+            } ;
+    }
+    
     data1.close();
-
     return 0;
 }
+
 
 char check_if_read()
 {
@@ -322,7 +370,7 @@ bool checkduplicateID(string ID)
 vector <string> VecID;
 vector <string> VecPASS;
 
-void sign_up_page()
+bool sign_up_page(char user[20],char pass[20],char conpass[20])
 /*This function is the main core for register page. It cin
  Username and password then put it back to VecID and VecPASS.*/
 { 
@@ -340,8 +388,9 @@ void sign_up_page()
     do{
 
 
-        cout << "Please enter your Username(Register) : ";
-        getline(cin,textInput);
+        // cout << "Please enter your Username(Register) : ";
+        // getline(cin,textInput);
+        textInput = user;
         charcheck = charchecker(textInput);
         
         if (checkduplicateID(textInput) == true)
@@ -355,28 +404,30 @@ void sign_up_page()
         if (charcheck == true)
         {
             p1:
-            cout << "Please enter your Password(Register) : "; // enter password for register
-            getline(cin,passInput1);
+            //cout << "Please enter your Password(Register) : "; // enter password for register
+            //getline(cin,passInput1);
+            passInput1 = pass;
 
             charcheck = passchecker(passInput1);
             if (charcheck == true)
             {
-            cout << "Please confirm your Password(Register) : "; // confirm password
-            getline(cin,passInput2);
-            cout << "-------------------------------------------------------" << endl;
+            //cout << "Please confirm your Password(Register) : "; // confirm password
+            //getline(cin,passInput2);
+            passInput2 = conpass;
+            //cout << "-------------------------------------------------------" << endl;
 
             if (passInput1 == passInput2)
             {
                 PassEncryp=EncryptionPASS(passInput2);
                 VecPASS.push_back(PassEncryp);
-                break;
+                return false;
             }
-            else
+            else // if dupicate
             {
-                cout << "Password and confirm password does not match" << endl;
-                cout << "Please try again" << endl;
-                cout << "-------------------------------------------------------" << endl;
-                goto p1;
+                // cout << "Password and confirm password does not match" << endl;
+                // cout << "Please try again" << endl;
+                // cout << "-------------------------------------------------------" << endl;
+                return true;   
             }
             
             
@@ -402,7 +453,7 @@ void sign_up_page()
 }
 
 
-void register_page() 
+bool register_page(char user[20],char pass[20],char conpass[20]) 
 /*not spacial in this func just make absaction for easy way to use in main*/
 {
     char ID[69];
@@ -411,21 +462,27 @@ void register_page()
     string pass_one;
 
     ofstream file_out("database/user_data.txt",ios::app);
-    sign_up_page();
-    ifstream file_in("database/user_data.txt");
-    string text1;
-    int Sequence = 0;
-    char temp1[1];
-
-    while (getline(file_in,text1))
+    if (sign_up_page(user,pass,conpass))
     {
-        Sequence++;
+        return false;
     }
+    else
+    {
+        ifstream file_in("database/user_data.txt");
+        string text1;
+        int Sequence = 0;
+        char temp1[1];
 
-    file_in.close();
-    file_out << "ID = " << VecID[0] << " PASSWORD : " << VecPASS[0] << " | TYPE : P No." << Sequence+1 <<  endl;
-    file_out.close();
-    
+        while (getline(file_in,text1))
+        {
+            Sequence++;
+        }
+
+        file_in.close();
+        file_out << "ID = " << VecID[0] << " PASSWORD : " << VecPASS[0] << " | TYPE : P No." << Sequence+1 <<  endl;
+        file_out.close();
+        return true;
+    }
 }
 
 string login_page(char usn[20],char pass[20])
@@ -835,15 +892,15 @@ do  //THIS FOR CHECK AND GET DATE OF BIRTH !
     chb = 1;
     /*cout<<"\t\t\t Input your patient Birthday (dd mm yyyy) e.g 01 02 2000 ::  ";
     cin>>day>>month>>year;*/
-    if(month < 1 or month > 12)
+    if(month < 1 || month > 12)
     {
         chb = 0;
         /*changeColor(12);
         cout<<"\t\t\tPlease Input Month between 1-12 ! \n";
         changeColor(7);*/
-        if (month==1 or month==3 or month==5 or month==7 or month==8 or month==10 or month==12)
+        if (month==1 || month==3 || month==5 || month==7 || month==8 || month==10 || month==12)
         {
-           if (day>31 or day<1)
+           if (day>31 || day<1)
            {
            chb = 0;
            return 14;
@@ -854,7 +911,7 @@ do  //THIS FOR CHECK AND GET DATE OF BIRTH !
         } 
         else if (month == 2)
         {
-            if (day>29 or day<1)
+            if (day>29 || day<1)
             {
             chb = 0;
             return 15;
@@ -863,10 +920,10 @@ do  //THIS FOR CHECK AND GET DATE OF BIRTH !
             changeColor(7);*/
             }
         }
-        else if (month==4 or month==6 or month==9 or month==11)
+        else if (month==4 || month==6 || month==9 || month==11)
         {
             
-            if (day>30 or day<1)
+            if (day>30 || day<1)
             {
             chb = 0;
             return 16;
@@ -893,9 +950,8 @@ do  //THIS FOR CHECK AND GET DATE OF BIRTH !
 }
 void readcheck ();
 
-void writeData(char Firstname[10],char Lastname[10],char Day[3],char Month[3],char Year[5],char Hei[4],char Wei[3],char Gen[10],char Ill[20],char id_doc[10] ){
+void writeData(char Firstname[10],char Lastname[10],char Day[3],char Month[3],char Year[5],char Hei[4],char Wei[3],char Gen[10],char Ill[20],int id_doc){
 //========================================================
-    int id=1 ;
     string fname(Firstname),lname(Lastname),d(Day),mon(Month),yea(Year), weight(Wei),height(Hei),Gender(Gen),Illness(Ill);
     int day=atoi(d.c_str()), month=atoi(mon.c_str()), year=atoi(yea.c_str());
 
@@ -909,12 +965,16 @@ void writeData(char Firstname[10],char Lastname[10],char Day[3],char Month[3],ch
         Sequence++;
     }
 
-    string format = "database\\"+to_string(id)+"_patientlog.txt";
-    cout << format;
+    string format = "database\\"+to_string(id_doc)+"_patientlog.txt";
+    
+    string status_1 = "NULL",status_2 = "NULL",status_3 = "NULL",status_4 = "NULL";
+
+    
+
     ofstream write("database\\userdatabase.txt",ios::out | ios::app); 
     ofstream write2(format.c_str(),ios::out | ios::app);//Plan to delete what we just added
-    write << "Name : " <<fname<< " "<< "LastName : " <<lname << "  Date of Birth: "<<day<<" / "<<month<<" / "<< year << "   height:" << height << "  Weight:" << weight << " Gender:" << Gender << " Illness:" << Illness << " No." << Sequence+1 << "DoctorID :" << id_doc << endl;
-    write2 << "Name : " <<fname<< " "<< "LastName : " <<lname  << " Illness:" << Illness << endl;
+    write << "Name : " <<fname<< " "<< "LastName : " <<lname << "  Date of Birth: "<<day<<" / "<<month<<" / "<< year << "   height:" << height << "  Weight:" << weight << " Gender:" << Gender << " Illness:" << Illness << " No." << Sequence+1 << " "<< "DoctorID :" << id_doc << endl;
+    write2 << "Name : " <<fname<< " "<< "LastName : " <<lname  << " Illness : " << Illness << " | A : " << status_1 << " W : " << status_2 << " P : " << status_3 << " D : " << status_4 << endl;
     write.close();
     write2.close();
 
@@ -992,3 +1052,82 @@ string SDataDB(int ID,char data_case) // N L D W H G I O
     
 }
 
+
+void readcheck (int id_pt,int num_botton)
+{
+    ifstream file_input("database/userdatabase.txt");
+    string textline;
+    char name[50],lastname[50],dofb[50],gender[50],illness[50] ;
+    char height[10],weight[10],number[10] ;
+    int date,month,year,doc_id;
+    //Name : Phirachat LastName : Kochanil  Date of Birth: 9 / 11 / 2000   height:171  Weight:71 Gender:Man Illness:Abdominal No.3
+    char fomat[] = "Name : %s LastName : %s  Date of Birth: %d / %d / %d   height:%s  Weight:%s Gender:%s Illness:%s No.%s DoctorID :%d";
+    while (getline(file_input,textline))
+    {
+        sscanf(textline.c_str(),fomat,&name,&lastname,&date,&month,&year,&height,&weight,&gender,&illness,&number,&doc_id);
+        if (id_pt == stoi(number))
+        {
+            break;
+        }
+        
+    }
+    file_input.close();
+
+
+    string formatout = "database\\"+to_string(doc_id)+"_patientlog.txt";
+    ifstream main_input(formatout.c_str());
+    ofstream temp_out("database/temp.txt");
+
+    string from_main;
+    
+    while (getline(main_input,from_main)) // create temp.txt that is a copy of patientlog.txt
+    {
+        temp_out << from_main << endl;
+    }
+
+    temp_out.close();
+    main_input.close();
+
+    ifstream status(formatout.c_str());
+
+    char my_name[30],my_Lname[30],my_ill[30];
+    char format_status[] = "Name : %s LastName : %s  Illness : %s | A : %s W : %s P : %s D : %s";
+    string findstatus;
+    char status_1[5],status_2[5],status_3[5],status_4[5];
+    while (getline(status,findstatus))
+    {
+        sscanf(findstatus.c_str(),format_status,&my_name,&my_Lname,&my_ill,status_1,&status_2,&status_3,&status_4);
+        //cout << status_1;
+        //cout << my_name << my_Lname << my_ill << status_1 << status_2 << status_3 << status_4;
+    }
+
+    status.close();
+    
+    ifstream temp_in("database/temp.txt");
+    ofstream main_output(formatout.c_str());
+    string from_temp;
+
+    string statusA = status_1;
+    string statusW = status_2;
+    string statusP = status_3;
+    string statusD = status_4;
+
+    switch (num_botton)
+    {
+    case 1 : statusA = "READ"; break;
+    case 2 : statusW = "READ"; break;
+    case 3 : statusP = "READ"; break;
+    case 4 : statusD = "READ"; break;
+    }
+    
+    
+    while (getline(temp_in,from_temp))
+    {                                  // Activity / Wound care / Prohibition / Diet care //                 
+        main_output << "Name : " << my_name <<" "<< "LastName : " << my_Lname << "  Illness : " << my_ill << " | A : " << statusA << " W : " << statusW << " P : " << statusP << " D : " << statusD << endl;
+    }
+    temp_in.close();
+    main_output.close();
+   
+   remove("database/temp.txt");
+    
+}

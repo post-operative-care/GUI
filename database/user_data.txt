@@ -1,6 +1,4 @@
 ID = fqe3 PASSWORD : 4567 | TYPE : D No.1
 ID = fqe4 PASSWORD : 4567 | TYPE : D No.2
-ID = fqe5 PASSWORD : 4567 | TYPE : D No.3
-ID = fqe6 PASSWORD : 4567 | TYPE : D No.4
-ID = fqe7 PASSWORD : 4567 | TYPE : D No.5
-ID = ogm3 PASSWORD : 4567 | TYPE : P No.6
+ID = ogm3 PASSWORD : 4567 | TYPE : P No.3
+ID = rjktf PASSWORD : 4567 | TYPE : P No.4
