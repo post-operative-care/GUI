@@ -671,10 +671,8 @@ string findNameMonth(int a)
     return 0;
  }
 //=======================================================================
-void Command(){
  
- }
- 
+
 //===========================================================================
 void ShowHasDone(int day,int month,int year,string fname,string lname,string weight,string height){
  cout<< "\t\t\t-=========================================-"<< endl;
@@ -760,7 +758,7 @@ cout<<"\t\t\t Enter Your Patient Data Follow This \n"<<endl;*/
             che = 1;
             /*cout<<"\t\t\t Input your patient LastName :  ";
             getline(cin,lname);*/
-            if(lname.find_first_not_of( "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ")!=string::npos)
+            if(lname.find_first_not_of("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ")!=string::npos)
             {
                 che = 0;
                 /*changeColor(12);
@@ -895,12 +893,22 @@ do  //THIS FOR CHECK AND GET DATE OF BIRTH !
 }
 void writeData(char Gen[10],char Ill[20],char Firstname[10],char Lastname[10],char Day[3],char Month[3],char Year[5],char Wei[3],char Hei[4]){
 //========================================================
-string fname(Firstname),lname(Lastname),d(Day),mon(Month),yea(Year), weight(Wei),height(Hei),Gender(Gen),Illness(Ill);
-int day=atoi(d.c_str()), month=atoi(mon.c_str()), year=atoi(yea.c_str());
+    string fname(Firstname),lname(Lastname),d(Day),mon(Month),yea(Year), weight(Wei),height(Hei),Gender(Gen),Illness(Ill);
+    int day=atoi(d.c_str()), month=atoi(mon.c_str()), year=atoi(yea.c_str());
 
-ofstream write("database\\userdatabase.txt",ios::out | ios::app); //Plan to delete what we just added
-write << "Name : " <<fname<< " "<< "LastName : " <<lname << "  Date of Birth: "<<day<<" / "<<month<<" / "<< year << "   height:" << height << "  Weight:" << weight << " Gender:" << Gender << " Illness:" << Illness << endl;
-write.close();
+    ifstream file_in("database\\userdatabase.txt");
+    string text1;
+    int Sequence = 0;
+    char temp1[1];
+
+    while (getline(file_in,text1))
+    {
+        Sequence++;
+    }
+
+    ofstream write("database\\userdatabase.txt",ios::out | ios::app); //Plan to delete what we just added
+    write << "Name : " <<fname<< " "<< "LastName : " <<lname << "  Date of Birth: "<<day<<" / "<<month<<" / "<< year << "   height:" << height << "  Weight:" << weight << " Gender:" << Gender << " Illness:" << Illness << " No." << Sequence+1 << endl;
+    write.close();
 
 }
 
