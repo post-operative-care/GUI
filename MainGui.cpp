@@ -30,7 +30,6 @@ HBITMAP hDa,hDc,hDe,hDg,hDh,hDhr,hDs;//DIET
 HBITMAP hAa,hAc,hAe,hAg,hAh,hAhr,hAs;//ACTIVITY
 HBITMAP hPa,hPc,hPe,hPg,hPh,hPhr,hPs;//PROHIBIT
 HBITMAP hWa,hWc,hWe,hWg,hWh,hWhr,hWs;//WOUND
-HFONT hFont;
 char type,user[20],Illness[20];
 string opLogin,gender;
 int id;
@@ -162,19 +161,19 @@ LRESULT CALLBACK WindowProcedure(HWND hWnd,UINT msg,WPARAM wp,LPARAM lp){
                 case DIET:
                     LoadImgData();   
                     if(strcmp(Illness,"Abdominal") == 0){
-                        MessageBoxW(hWnd,L"No Data Found",L"Sorry",MB_OK);
+                        MessageBoxW(hWnd,L"Data Not Found !",L"Sorry",MB_OK);
                     }else if(strcmp(Illness,"Cesarean") == 0){
                         readcheck(id,4);
                         hSpace = CreateWindowW(L"static",L"",WS_VISIBLE | WS_CHILD | SS_BITMAP,344,287,842,363,hWnd,NULL,NULL,NULL);
                         SendMessageW(hSpace,STM_SETIMAGE,IMAGE_BITMAP,(LPARAM)hDc);
                     }else if(strcmp(Illness,"Eye") == 0){
-                        MessageBoxW(hWnd,L"No Data Found",L"Sorry",MB_OK);
+                        MessageBoxW(hWnd,L"Data Not Found !",L"Sorry",MB_OK);
                     }else if(strcmp(Illness,"Gynecologic") == 0){
                         readcheck(id,4);
                         hSpace = CreateWindowW(L"static",L"",WS_VISIBLE | WS_CHILD | SS_BITMAP,344,287,842,363,hWnd,NULL,NULL,NULL);
                         SendMessageW(hSpace,STM_SETIMAGE,IMAGE_BITMAP,(LPARAM)hDc);
                     }else if(strcmp(Illness,"Hernia") == 0){
-                        MessageBoxW(hWnd,L"No Data Found",L"Sorry",MB_OK);
+                        MessageBoxW(hWnd,L"Data Not Found !",L"Sorry",MB_OK);
                     }else if(strcmp(Illness,"Hip Replacement") == 0){
                         readcheck(id,4);
                         hSpace = CreateWindowW(L"static",L"",WS_VISIBLE | WS_CHILD | SS_BITMAP,344,287,842,363,hWnd,NULL,NULL,NULL);
@@ -223,7 +222,7 @@ LRESULT CALLBACK WindowProcedure(HWND hWnd,UINT msg,WPARAM wp,LPARAM lp){
                         hSpace = CreateWindowW(L"static",L"",WS_VISIBLE | WS_CHILD | SS_BITMAP,344,287,842,363,hWnd,NULL,NULL,NULL);
                         SendMessageW(hSpace,STM_SETIMAGE,IMAGE_BITMAP,(LPARAM)hPa);
                     }else if(strcmp(Illness,"Cesarean") == 0){
-                        MessageBoxW(hWnd,L"No Data Found",L"Sorry",MB_OK);
+                        MessageBoxW(hWnd,L"Data Not Found !",L"Sorry",MB_OK);
                     }else if(strcmp(Illness,"Eye") == 0){
                         readcheck(id,3);
                         hSpace = CreateWindowW(L"static",L"",WS_VISIBLE | WS_CHILD | SS_BITMAP,344,287,842,363,hWnd,NULL,NULL,NULL);
@@ -253,17 +252,17 @@ LRESULT CALLBACK WindowProcedure(HWND hWnd,UINT msg,WPARAM wp,LPARAM lp){
                         hSpace = CreateWindowW(L"static",L"",WS_VISIBLE | WS_CHILD | SS_BITMAP,344,287,842,363,hWnd,NULL,NULL,NULL);
                         SendMessageW(hSpace,STM_SETIMAGE,IMAGE_BITMAP,(LPARAM)hWa);
                     }else if(strcmp(Illness,"Cesarean") == 0){
-                        MessageBoxW(hWnd,L"No Data Found",L"Sorry",MB_OK);
+                        MessageBoxW(hWnd,L"Data Not Found !",L"Sorry",MB_OK);
                     }else if(strcmp(Illness,"Eye") == 0){
-                        MessageBoxW(hWnd,L"No Data Found",L"Sorry",MB_OK);
+                        MessageBoxW(hWnd,L"Data Not Found !",L"Sorry",MB_OK);
                     }else if(strcmp(Illness,"Gynecologic") == 0){
-                        MessageBoxW(hWnd,L"No Data Found",L"Sorry",MB_OK);
+                        MessageBoxW(hWnd,L"Data Not Found !",L"Sorry",MB_OK);
                     }else if(strcmp(Illness,"Hernia") == 0){
-                        readcheck(id,3);
+                        readcheck(id,2);
                         hSpace = CreateWindowW(L"static",L"",WS_VISIBLE | WS_CHILD | SS_BITMAP,344,287,842,363,hWnd,NULL,NULL,NULL);
                         SendMessageW(hSpace,STM_SETIMAGE,IMAGE_BITMAP,(LPARAM)hWh);
                     }else if(strcmp(Illness,"Hip Replacement") == 0){
-                        MessageBoxW(hWnd,L"No Data Found",L"Sorry",MB_OK);
+                        MessageBoxW(hWnd,L"Data Not Found !",L"Sorry",MB_OK);
                     }else if(strcmp(Illness,"Spine") == 0){
                         MessageBoxW(hWnd,L"Data Not Found !",L"Sorry",MB_OK);
                      }
@@ -412,6 +411,10 @@ void PatientPage(HWND hWnd){
     HWND hPaWeight = CreateWindowW(L"Static",L"",WS_VISIBLE | WS_CHILD | ES_READONLY,808,195,35,15,hWnd,NULL,NULL,NULL);//weight
     SetWindowText(hPaWeight,Weight);
 
+    HWND hIl = CreateWindowW(L"Static",L"",WS_VISIBLE | WS_CHILD | ES_READONLY,466,140,100,15,hWnd,NULL,NULL,NULL);
+    SetWindowText(hIl,Illness);
+    CreateWindowW(L"Static",L"Illness:",WS_VISIBLE | WS_CHILD | ES_READONLY,401,140,50,15,hWnd,NULL,NULL,NULL);
+
     HWND hLogout = CreateWindowW(L"Button",NULL,WS_VISIBLE | WS_CHILD | BS_BITMAP,408,193,70,20,hWnd,(HMENU)LOG_OUT,NULL,NULL);
     SendMessageW(hLogout,BM_SETIMAGE,IMAGE_BITMAP,(LPARAM)hPaLogout);
 }
@@ -430,6 +433,7 @@ void LoadImgPa(){ //Loadimage for patient page
     hPaDiet = (HBITMAP)LoadImageW(NULL,L"PatientPage\\diet.bmp",IMAGE_BITMAP,0,0,LR_LOADFROMFILE);
     hPaWou = (HBITMAP)LoadImageW(NULL,L"PatientPage\\wound care.bmp",IMAGE_BITMAP,0,0,LR_LOADFROMFILE);
     hPaPro = (HBITMAP)LoadImageW(NULL,L"PatientPage\\Prohibit.bmp",IMAGE_BITMAP,0,0,LR_LOADFROMFILE);
+    
 
     hPaLogout = (HBITMAP)LoadImageW(NULL,L"PatientPage\\logout.bmp",IMAGE_BITMAP,0,0,LR_LOADFROMFILE);
     
