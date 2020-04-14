@@ -366,11 +366,14 @@ bool checkduplicateID(string ID)
     file_in.close(); 
     return false;
 }
-bool check(char ID[1])
+
+bool check(char usn[20])
 /* this function used to detect input on username that user gave
  not in used in database */
 {
-    char cerent_name[100];
+    string usUuEn = usn,usnEn;
+    usnEn = EncryptionID(usUuEn);
+    char current_name[100];
     ifstream file_in("database/user_data.txt");
     string textline;
     
@@ -378,10 +381,10 @@ bool check(char ID[1])
     {
         //testcase
         //cout << "textline = " << textline << endl;
-        sscanf(textline.c_str(),"ID = %s ",&cerent_name);
+        sscanf(textline.c_str(),"ID = %s ",&current_name);
         //cout << cerent_name << endl;
 
-        if (cerent_name == ID)
+        if (current_name == usnEn)
         {
             //cout << "This username is already taken." << endl;
             return true;
@@ -1004,7 +1007,7 @@ void writeData(char Firstname[10],char Lastname[10],char Day[3],char Month[3],ch
     ofstream write("database\\userdatabase.txt",ios::out | ios::app); 
     ofstream write2(format.c_str(),ios::out | ios::app);//Plan to delete what we just added
     write << "Name : " <<fname<< " "<< "LastName : " <<lname << "  Date of Birth: "<<day<<" / "<<month<<" / "<< year << "   height:" << height << "  Weight:" << weight << " Gender:" << Gender << " Illness:" << Illness << " No." << Sequence+1 << " "<< "DoctorID :" << id_doc << endl;
-    write2 << "Name : " <<fname<< " "<< "LastName : " <<lname  << " Illness : " << Illness << " | A : " << status_1 << " W : " << status_2 << " P : " << status_3 << " D : " << status_4 << endl;
+    write2 << "Name : " <<fname<< " "<< "LastName : " <<lname  << " Illness : " << Illness << " | A : " << status_1 << " || W : " << status_2 << " || P : " << status_3 << " || D : " << status_4 << endl;
     write.close();
     write2.close();
 
@@ -1120,7 +1123,7 @@ void readcheck (int id_pt,int num_botton)
     ifstream status("database\\temp.txt");
 
     char my_name[30],my_Lname[30],my_ill[30];
-    char format_status[] = "Name : %s LastName : %s  Illness : %s | A : %s W : %s P : %s D : %s";
+    char format_status[] = "Name : %s LastName : %s  Illness : %s | A : %s || W : %s || P : %s || D : %s";
     string findstatus,str_name = name,str_myname,str_lastname = lastname,str_mylname;
     char status_1[5],status_2[5],status_3[5],status_4[5];
     while (getline(status,findstatus))
@@ -1169,7 +1172,7 @@ void readcheck (int id_pt,int num_botton)
         if (str_myname == str_name && str_mylname == str_lastname)
         {
             //cout << 2;
-            main_output << "Name : " << my_name <<" "<< "LastName : " << my_Lname << "  Illness : " << my_ill << " | A : " << statusA << " W : " << statusW << " P : " << statusP << " D : " << statusD << endl;
+            main_output << "Name : " << my_name <<" "<< "LastName : " << my_Lname << "  Illness : " << my_ill << " | A : " << statusA << " || W : " << statusW << " || P : " << statusP << " || D : " << statusD << endl;
         }
         else
         {

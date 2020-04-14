@@ -23,6 +23,8 @@ void DoctorPage(HWND);
 void LoadImgDoc();
 void LoadImgData();
 void displayFile(char*);
+void testfile(string);
+void display_text(string);
 HWND hTop,hUser,hPass,hReFn,hReLn,hReDay,hReMont,hReYear,hWei,hHeig,hGen,hReUsn,hRePass,hReConPass;
 HWND hSpace,hEdit;//openfile Edit
 HBITMAP hLogBg,hLogin,hReBg,hSi,hBa,hPaProM,hPaBg,hPaDiet,hPaPro,hPaWou,hPaActi,hPaLogout,hDocBg,hDocPro,hDocRe;
@@ -81,11 +83,7 @@ LRESULT CALLBACK WindowProcedure(HWND hWnd,UINT msg,WPARAM wp,LPARAM lp){
                             id=find_Sequence(username);
                             LoadImgDoc();     
                             DoctorPage(hWnd);
-                            string spath = "database\\"+to_string(id)+"_patientlog.txt";
-                            char path[25];
-                            strcpy(path,spath.c_str());
-                            hEdit = CreateWindowW(L"Edit",L"",WS_VISIBLE | WS_CHILD | ES_MULTILINE | WS_VSCROLL | WS_HSCROLL |  ES_READONLY,450,87,731,565,hWnd,NULL,NULL,NULL);
-                            displayFile(path);
+                            
                         }else if(type == 'P'){
                             EnumChildWindows(hWnd,DestoryChildCallback, NULL);
                             id=find_Sequence(username);
@@ -114,7 +112,7 @@ LRESULT CALLBACK WindowProcedure(HWND hWnd,UINT msg,WPARAM wp,LPARAM lp){
                     }else{
 
                         if(pdata_base(Gender,Illness,Firstname,Lastname,Day,Month,Year,Weight,Height) == 10){
-                            MessageBoxW(hWnd,L"You can only input alpha here!",L"Error",MB_OK | MB_ICONEXCLAMATION);
+                            MessageBoxW(hWnd,L"You can only input alphabet in name or lastname !",L"Error",MB_OK | MB_ICONEXCLAMATION);
                         }else if(pdata_base(Gender,Illness,Firstname,Lastname,Day,Month,Year,Weight,Height) == 11){
                             MessageBoxW(hWnd,L"This Patient has already Registred.",L"Error",MB_OK | MB_ICONEXCLAMATION);
                         }else if(pdata_base(Gender,Illness,Firstname,Lastname,Day,Month,Year,Weight,Height) == 12){
@@ -209,7 +207,7 @@ LRESULT CALLBACK WindowProcedure(HWND hWnd,UINT msg,WPARAM wp,LPARAM lp){
                         readcheck(id,1);
                         hSpace = CreateWindowW(L"static",L"",WS_VISIBLE | WS_CHILD | SS_BITMAP,344,287,842,363,hWnd,NULL,NULL,NULL);
                         SendMessageW(hSpace,STM_SETIMAGE,IMAGE_BITMAP,(LPARAM)hAhr);
-                    }else{
+                    }else if(strcmp(Illness,"Spine") == 0){
                         readcheck(id,1);
                         hSpace = CreateWindowW(L"static",L"",WS_VISIBLE | WS_CHILD | SS_BITMAP,344,287,842,363,hWnd,NULL,NULL,NULL);
                         SendMessageW(hSpace,STM_SETIMAGE,IMAGE_BITMAP,(LPARAM)hAs);
@@ -466,7 +464,12 @@ void DoctorPage(HWND hWnd){
     HWND DrName = CreateWindowW(L"Static",NULL,WS_VISIBLE | WS_CHILD | SS_CENTER,126,381,250,20,hWnd,NULL,NULL,NULL);
     SetWindowText(DrName,Fullname);
     
-    
+    string spath = "database\\"+to_string(id)+"_patientlog.txt";
+    //char path[50];
+    //strcpy(path,spath.c_str());
+    hEdit = CreateWindowW(L"Edit",L"",WS_VISIBLE | WS_CHILD | ES_MULTILINE | WS_VSCROLL | WS_HSCROLL |  ES_READONLY,450,87,731,565,hWnd,NULL,NULL,NULL);
+    display_text(spath);
+    // displayFile(path);
 }
 
 void LoadImgDoc(){
@@ -474,7 +477,7 @@ void LoadImgDoc(){
     if(gender == "Man"){
         hDocPro = (HBITMAP)LoadImageW(NULL,L"DoctorPage\\doc_male.bmp",IMAGE_BITMAP,106,105,LR_LOADFROMFILE); //male profile pic
     }else{
-        hDocPro = (HBITMAP)LoadImageW(NULL,L"DoctorPage\\doc_female.bmp",IMAGE_BITMAP,106,105,LR_LOADFROMFILE); //male profile pic
+        hDocPro = (HBITMAP)LoadImageW(NULL,L"DoctorPage\\doc_female.bmp",IMAGE_BITMAP,106,105,LR_LOADFROMFILE); //female profile pic
     }
     hDocBg = (HBITMAP)LoadImageW(NULL,L"DoctorPage\\Doctor_page.bmp",IMAGE_BITMAP,0,0,LR_LOADFROMFILE);
 
@@ -530,6 +533,48 @@ void displayFile(char *path){
 	char *data = new char(_size+1);
 	fread(data,_size,1,file);
 	data[_size] = '\0';
+    fclose(file);
 	
 	SetWindowText(hEdit,data);
+}
+
+
+void testfile(string spath){
+    char path[50];
+    strcpy(path,spath.c_str());
+    ifstream read_file(path);
+    //read_file.open;
+    string textline;
+    char info[200];
+    while(getline(read_file,textline))
+    {
+        strcat(info,textline.c_str());
+        strcat(info,"\\n");
+    }
+    read_file.close();
+    SetWindowText(hEdit,info);
+}
+
+
+void display_text(string path)
+{
+    vector<string> AllLine;
+    ifstream read(path);
+    string textline;
+    while (getline(read,textline))
+    {
+        AllLine.push_back(textline);
+    }
+    read.close();
+
+    string info1;
+    for (int i = 0; i < AllLine.size(); i++)
+    {
+        info1 += AllLine[i]+"\r\n"; //น้ำตาไหลลลล
+    }
+    
+    char info2[1000];
+    strcpy(info2,info1.c_str());
+
+    SetWindowText(hEdit,info2);
 }
