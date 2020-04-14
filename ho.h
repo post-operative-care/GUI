@@ -917,7 +917,11 @@ do  //CHECK PATIENT WEIGHT AND HEIGHT
 
   //THIS FOR CHECK AND GET DATE OF BIRTH !
  
-    if(month < 1 && month > 12)
+  if(year<1919 || year > 2020)
+    {
+        return 17;
+    }
+    else if(month >= 1 && month <= 12)
     {
         if (month==1 || month==3 || month==5 || month==7 || month==8 || month==10 || month==12)
         {
@@ -941,15 +945,12 @@ do  //CHECK PATIENT WEIGHT AND HEIGHT
             }
         }   
     }
-    else if(month<1 || month>12)
-      {
+    else
+    {
         return 18;
-      }
-    else if(year<1919 || year > 2020)
-      {
-            return 17;
-      }
-  
+    }
+    
+    cout << day;
     
 }    
 
