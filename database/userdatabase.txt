@@ -1,3 +1,6 @@
 Name : Wisarut LastName : Wongta  Date of Birth: 10 / 12 / 2001   height:172  Weight:70 Gender:Woman Illness:NULL No.1 DoctorID :NULL
 Name : Phirachat LastName : Kochanil  Date of Birth: 7 / 6 / 2002   height:123  Weight:25 Gender:Man Illness:NULL No.2 DoctorID :NULL
 Name : qwer LastName : asdf  Date of Birth: 4 / 4 / 2000   height:08  Weight:08 Gender:Woman Illness:Eye No.3 DoctorID :1
+Name : wisarut LastName : tipbung  Date of Birth: 4 / 11 / 2000   height:175  Weight:70 Gender:Man Illness:Eye No.4 DoctorID :1
+Name : aaa LastName : aaa  Date of Birth: 4 / 11 / 2000   height:180  Weight:80 Gender:Woman Illness:Abdominal No.5 DoctorID :1
+Name : bbb LastName : bbb  Date of Birth: 4 / 2 / 2000   height:80  Weight:80 Gender:Man Illness:Eye No.6 DoctorID :2

@@ -1,1 +1,3 @@
 Name : qwer LastName : asdf Illness : Eye | A : NULL || W : NULL || P : NULL || D : NULL
+Name : wisarut LastName : tipbung  Illness : Eye | A : READ || W : NULL || P : READ || D : NULL
+Name : aaa LastName : aaa  Illness : Abdominal | A : READ || W : READ || P : READ || D : NULL
