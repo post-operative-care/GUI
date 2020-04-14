@@ -800,15 +800,11 @@ bool OverHeight(string He){
 
 
 
-int pdata_base(char Gender[10],char Illness[20],char Firstname[10],char Lastname[10],char Day[3],char Month[3],char Year[5],char Wei[3],char Hei[4]){
-//cin.clear(); 
+int pdata_base(char Gender[10],char Illness[20],char Firstname[10],char Lastname[10],char Day[5],char Month[5],char Year[6],char Wei[5],char Hei[5])
+{
+
 string fname(Firstname),lname(Lastname),d(Day),mon(Month),yea(Year);
 int day=atoi(d.c_str()), month=atoi(mon.c_str()), year=atoi(yea.c_str()) ;
-/*cout<< "\t\t\t-=========================================-"<< endl;
-cout<<"\t\t\t\t WELCOME TO REGISTER PAGE"<<endl;
-cout<< "\t\t\t-=========================================-"<<endl;
-cout<<"\t\t\t Enter Your Patient Data Follow This \n"<<endl;*/
-//=======================================================================================
 
  int acheck=1;
   do // IN DUOLICATE CHECK LOOP,LOOP ISN'T WORKIMG BUT USING GOTO INSTEAD !  
@@ -919,71 +915,51 @@ do  //CHECK PATIENT WEIGHT AND HEIGHT
 
 //========================================================================================
 
-int chb = 1;
-do  //THIS FOR CHECK AND GET DATE OF BIRTH !
- {
-    chb = 1;
-    /*cout<<"\t\t\t Input your patient Birthday (dd mm yyyy) e.g 01 02 2000 ::  ";
-    cin>>day>>month>>year;*/
-    if(month < 1 || month > 12)
+  //THIS FOR CHECK AND GET DATE OF BIRTH !
+ 
+    if(month < 1 && month > 12)
     {
-        chb = 0;
-        /*changeColor(12);
-        cout<<"\t\t\tPlease Input Month between 1-12 ! \n";
-        changeColor(7);*/
         if (month==1 || month==3 || month==5 || month==7 || month==8 || month==10 || month==12)
         {
            if (day>31 || day<1)
            {
-           chb = 0;
            return 14;
-           /*changeColor(12);
-           cout<<"\t\t\tPlease Input Day between 1-31 ! \n";
-           changeColor(7);*/
            }
         } 
         else if (month == 2)
         {
             if (day>29 || day<1)
             {
-            chb = 0;
             return 15;
-            /*changeColor(12);
-            cout<<"\t\t\tPlease Input Day between 1-29 ! \n";
-            changeColor(7);*/
             }
         }
         else if (month==4 || month==6 || month==9 || month==11)
-        {
-            
+        { 
             if (day>30 || day<1)
             {
-            chb = 0;
             return 16;
-            /*changeColor(12);
-            cout<<"\t\t\tPlease Input Day between 1-30 ! \n";
-            changeColor(7);*/
             }
         }   
     }
+    else if(month<1 || month>12)
+      {
+        return 18;
+      }
     else if(year<1919 || year > 2020)
-        {
-            chb = 0;
+      {
             return 17;
-           /*changeColor(12);
-           cout<<"\t\t\tPlease CHECK  Years ! \n";
-           changeColor(7);*/
-        }
-     //cin.clear();     
- } while( chb !=1 );
+      }
+  
+    
+}    
+
 //=======================================================================
 // all here is for check before push back 
 //ShowHasDone(day,month,year,fname,lname,weight,height);
 //======================================================
-}
 void readcheck ();
 
-void writeData(char Firstname[10],char Lastname[10],char Day[3],char Month[3],char Year[5],char Hei[4],char Wei[3],char Gen[10],char Ill[20],int id_doc){
+void writeData(char Firstname[10],char Lastname[10],char Day[5],char Month[5],char Year[6],char Hei[5],char Wei[5],char Gen[10],char Ill[20],int id_doc){
 //========================================================
     string fname(Firstname),lname(Lastname),d(Day),mon(Month),yea(Year), weight(Wei),height(Hei),Gender(Gen),Illness(Ill);
     int day=atoi(d.c_str()), month=atoi(mon.c_str()), year=atoi(yea.c_str());

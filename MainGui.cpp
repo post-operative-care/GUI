@@ -93,16 +93,16 @@ LRESULT CALLBACK WindowProcedure(HWND hWnd,UINT msg,WPARAM wp,LPARAM lp){
                     }
                     break; 
                 case SIGN_UP: 
-                    char Gender[10],Firstname[10],Lastname[10],Day[3],Month[3],Year[5],Weight[3],Height[4],usn[20],ps[20],cps[20];
+                    char Gender[10],Firstname[10],Lastname[10],Day[5],Month[5],Year[6],Weight[5],Height[5],usn[20],ps[20],cps[20];
                     GetWindowText(hGen,Gender,10);
                     GetWindowText(hTop,Illness,20);
                     GetWindowText(hReFn,Firstname,10);
                     GetWindowText(hReLn,Lastname,10);
-                    GetWindowText(hReDay,Day,3);
-                    GetWindowText(hReMont,Month,3);
-                    GetWindowText(hReYear,Year,5);
-                    GetWindowText(hWei,Weight,3);
-                    GetWindowText(hHeig,Height,4);
+                    GetWindowText(hReDay,Day,5);
+                    GetWindowText(hReMont,Month,5);
+                    GetWindowText(hReYear,Year,6);
+                    GetWindowText(hWei,Weight,5);
+                    GetWindowText(hHeig,Height,5);
                     GetWindowText(hReUsn,usn,20);
                     GetWindowText(hRePass,ps,20);
                     GetWindowText(hReConPass,cps,20);
@@ -127,6 +127,8 @@ LRESULT CALLBACK WindowProcedure(HWND hWnd,UINT msg,WPARAM wp,LPARAM lp){
                             MessageBoxW(hWnd,L"Please Input Day between 1-30 !",L"Error",MB_OK | MB_ICONEXCLAMATION);
                         }else if(pdata_base(Gender,Illness,Firstname,Lastname,Day,Month,Year,Weight,Height) == 17){
                             MessageBoxW(hWnd,L"Please Check  Years !",L"Error",MB_OK | MB_ICONEXCLAMATION);
+                        }else if(pdata_base(Gender,Illness,Firstname,Lastname,Day,Month,Year,Weight,Height) == 18){
+                            MessageBoxW(hWnd,L"Please Check  Month !",L"Error",MB_OK | MB_ICONEXCLAMATION);
                         }else if(check(usn)){
                              MessageBoxW(hWnd,L"Duplicate Username",L"Error",MB_OK | MB_ICONEXCLAMATION);
                         }else if(!register_page(usn,ps,cps)){
